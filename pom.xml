@@ -12,18 +12,18 @@
       Library, that provides Leaflet.js map components for Apache Wicket.
   </description>
 
-  <url>https://github.com/iref/wicket-leaflet</url>
+  <url>https://github.com/DrunkenPandaFans/wicket-leaflet</url>
 
   <scm>
-      <url>git@github.com:iref/wicket-leaflet.git</url>
-      <connection>scm:git:git@github.com:iref/wicket-leaflet.git</connection>
-      <developerConnection>scm:git:ssh://git@github.com:iref/wicket-leaflet.git</developerConnection>
+      <url>git@github.com:DrunkenPandaFans/wicket-leaflet.git</url>
+      <connection>scm:git:git@github.com:DrunkenPandaFans/wicket-leaflet.git</connection>
+      <developerConnection>scm:git:ssh://git@github.com:DrunkenPandaFans/wicket-leaflet.git</developerConnection>
       <tag>HEAD</tag>
   </scm>
 
   <issueManagement>
       <system>github</system>
-      <url>https://github.com/iref/wicket-leaflet/issues</url>
+      <url>https://github.com/DrunkenPandaFans/wicket-leaflet/issues</url>
   </issueManagement>
 
   <licenses>
