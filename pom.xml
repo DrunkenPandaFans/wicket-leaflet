@@ -7,33 +7,131 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>wicket-leaflet</name>
-  <url>http://maven.apache.org</url>
+  <name>Wicket Leaflet.js</name>
+  <description>
+      Library, that provides Leaflet.js map components for Apache Wicket.
+  </description>
+  
+  <url>https://github.com/iref/wicket-leaflet</url>
+  
+  <scm>
+      <url>git@github.com:iref/wicket-leaflet.git</url>
+      <connection>scm:git:git@github.com:iref/wicket-leaflet.git</connection>
+      <developerConnection>scm:git:ssh://git@github.com:iref/wicket-leaflet.git</developerConnection>
+      <tag>HEAD</tag>
+  </scm>
+  
+  <issueManagement>
+      <system>github</system>
+      <url>https://github.com/iref/wicket-leaflet/issues</url>
+  </issueManagement>
+  
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <wicket.version>6.13.0</wicket.version>
+    <maven.java.source>1.7</maven.java.source>
+    <maven.java.target>1.7</maven.java.target>
   </properties>
 
   <dependencies>
     <dependency>
+      <groupId>org.apache.wicket</groupId>
+      <artifactId>wicket-core</artifactId>
+      <version>${wicket.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.7</version>
+      <version>4.11</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
 
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <configuration>
-            <source>1.5</source>
-            <target>1.5</target>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
+    <resources>
+      <resource>
+        <filtering>false</filtering>
+        <directory>src/main/resources</directory>
+      </resource>
+      <resource>
+        <filtering>false</filtering>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**</include>
+        </includes>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    
+    <testResources>
+      <testResource>
+        <filtering>false</filtering>
+        <directory>src/test/resources</directory>
+      </testResource>
+      <testResource>
+        <filtering>false</filtering>
+        <directory>src/test/java</directory>
+        <includes>
+          <include>**</include>
+        </includes>
+        <excludes>
+          <exclude>**/*.java</exclude>
+          </excludes>
+      </testResource>
+    </testResources>
+
+    
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>${maven.java.source}</source>            
+          <target>${maven.java.target}</target>
+          <compilerVersion>${maven.java.source}</compilerVersion>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <showDeprecation>true</showDeprecation>
+          <showWarnings>true</showWarnings>
+          <optimize>true</optimize>
+        </configuration>
+      </plugin>
+        
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>            
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>jar</goal>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+       </executions>
+     </plugin>
+        
+     <plugin>
+       <groupId>org.apache.maven.plugins</groupId>
+       <artifactId>maven-jar-plugin</artifactId>
+       <version>2.4</version>
+       <executions>
+         <execution>
+           <goals>
+             <goal>test-jar</goal>
+           </goals>
+         </execution>
+       </executions>
+     </plugin>
+    </plugins>    
   </build>
 </project>
