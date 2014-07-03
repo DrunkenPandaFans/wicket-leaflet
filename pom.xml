@@ -11,21 +11,21 @@
   <description>
       Library, that provides Leaflet.js map components for Apache Wicket.
   </description>
-  
+
   <url>https://github.com/iref/wicket-leaflet</url>
-  
+
   <scm>
       <url>git@github.com:iref/wicket-leaflet.git</url>
       <connection>scm:git:git@github.com:iref/wicket-leaflet.git</connection>
       <developerConnection>scm:git:ssh://git@github.com:iref/wicket-leaflet.git</developerConnection>
       <tag>HEAD</tag>
   </scm>
-  
+
   <issueManagement>
       <system>github</system>
       <url>https://github.com/iref/wicket-leaflet/issues</url>
   </issueManagement>
-  
+
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
@@ -73,7 +73,7 @@
         </excludes>
       </resource>
     </resources>
-    
+
     <testResources>
       <testResource>
         <filtering>false</filtering>
@@ -91,12 +91,12 @@
       </testResource>
     </testResources>
 
-    
+
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>${maven.java.source}</source>            
+          <source>${maven.java.source}</source>
           <target>${maven.java.target}</target>
           <compilerVersion>${maven.java.source}</compilerVersion>
           <encoding>${project.build.sourceEncoding}</encoding>
@@ -105,9 +105,9 @@
           <optimize>true</optimize>
         </configuration>
       </plugin>
-        
+
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>            
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
         <version>2.2</version>
         <executions>
@@ -119,7 +119,7 @@
           </execution>
        </executions>
      </plugin>
-        
+
      <plugin>
        <groupId>org.apache.maven.plugins</groupId>
        <artifactId>maven-jar-plugin</artifactId>
@@ -132,6 +132,6 @@
          </execution>
        </executions>
      </plugin>
-    </plugins>    
+    </plugins>
   </build>
 </project>
