@@ -3,4 +3,7 @@ jdk:
   - oraclejdk7
   - openjdk7
   - openjdk6
-script: mvn clean compile test
+script:
+  - mvn clean compile test
+after_success:
+  - mvn clean test jacoco:report coveralls:jacoco
