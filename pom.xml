@@ -25,6 +25,11 @@
       <system>github</system>
       <url>https://github.com/DrunkenPandaFans/wicket-leaflet/issues</url>
   </issueManagement>
+  
+  <ciManagement>
+      <system>travis-ci</system>
+      <url>https://travis-ci.org/DrunkenPandaFans/wicket-leaflet</url>      
+  </ciManagement>
 
   <licenses>
     <license>
