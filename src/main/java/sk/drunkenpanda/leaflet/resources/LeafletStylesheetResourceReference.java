@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cz.drunkenpanda.leaflet.resources;
+package sk.drunkenpanda.leaflet.resources;
 
 import de.agilecoders.wicket.webjars.request.resource.WebjarsCssResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package cz.drunkenpanda.leaflet;
+package sk.drunkenpanda.leaflet;
 
-import cz.drunkenpanda.leaflet.resources.LeafletJavascriptResourceReference;
-import cz.drunkenpanda.leaflet.resources.LeafletStylesheetResourceReference;
+import sk.drunkenpanda.leaflet.resources.LeafletJavascriptResourceReference;
+import sk.drunkenpanda.leaflet.resources.LeafletStylesheetResourceReference;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.request.resource.UrlResourceReference;
@@ -105,7 +105,7 @@ public class DefaultLeafletSettings implements LeafletSettings {
 
     @Override
     public boolean useWebJars() {
-        return !useCdn && (javascriptReference != null || cssReference != null);
+        return !useCdn && (javascriptReference == null || cssReference == null);
     }
 
     @Override

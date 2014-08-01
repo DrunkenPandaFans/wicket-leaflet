@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cz.drunkenpanda.leaflet;
+package sk.drunkenpanda.leaflet;
 
 import org.apache.wicket.request.resource.ResourceReference;
 
