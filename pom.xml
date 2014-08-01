@@ -43,7 +43,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <wicket.version>6.13.0</wicket.version>
     <webjars.version>0.3.4</webjars.version>
-    <leaflet.version>0.7.3</leaflet.version>
+    <leaflet.version>0.7.3</leaflet.version>    
+    <servlet.version>3.1.0</servlet.version>
     <junit.version>4.11</junit.version>
     <maven.java.source>1.7</maven.java.source>
     <maven.java.target>1.7</maven.java.target>
@@ -66,6 +67,13 @@
         <groupId>org.webjars</groupId>
         <artifactId>leaflet</artifactId>
         <version>${leaflet.version}</version>
+    </dependency>        
+    
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>${servlet.version}</version>
+        <scope>provided</scope>
     </dependency>
 
     <dependency>
