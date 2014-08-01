@@ -42,6 +42,9 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <wicket.version>6.13.0</wicket.version>
+    <webjars.version>0.3.4</webjars.version>
+    <leaflet.version>0.7.3</leaflet.version>
+    <junit.version>4.11</junit.version>
     <maven.java.source>1.7</maven.java.source>
     <maven.java.target>1.7</maven.java.target>
   </properties>
@@ -52,11 +55,23 @@
       <artifactId>wicket-core</artifactId>
       <version>${wicket.version}</version>
     </dependency>
+    
+    <dependency>
+        <groupId>de.agilecoders.wicket.webjars</groupId>
+        <artifactId>wicket-webjars</artifactId>
+        <version>${webjars.version}</version>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.webjars</groupId>
+        <artifactId>leaflet</artifactId>
+        <version>${leaflet.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
