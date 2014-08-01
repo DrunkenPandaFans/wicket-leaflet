@@ -16,8 +16,8 @@
 
 package cz.drunkenpanda.leaflet;
 
-import de.agilecoders.wicket.webjars.request.resource.WebjarsCssResourceReference;
-import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceReference;
+import cz.drunkenpanda.leaflet.resources.LeafletJavascriptResourceReference;
+import cz.drunkenpanda.leaflet.resources.LeafletStylesheetResourceReference;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.request.resource.UrlResourceReference;
@@ -37,7 +37,7 @@ public class DefaultLeafletSettings implements LeafletSettings {
     private static final String JS_CDN_PATTERN = "http://cdn.leafletjs.com/leaflet-%1$s/leaflet.js";
     
     /** Parametrized CDN url for stylesheet resource. */
-    private static final String CSS_CDN_PATTERN = "http://cdn.leafletjs.com/leaflet-%1$s/leaflet.css";
+    private static final String CSS_CDN_PATTERN = "http://cdn.leafletjs.com/leaflet-%1$s/leaflet.css";        
     
     private final String version;
     private final ResourceReference javascriptReference;
@@ -81,7 +81,7 @@ public class DefaultLeafletSettings implements LeafletSettings {
             jsReference = javascriptReference;
         }
         
-        return jsReference != null ? jsReference : new WebjarsJavaScriptResourceReference("leaflet/current/leaflet.js");
+        return jsReference != null ? jsReference : Holder.LEAFLET_JAVASCRIPT;
     }
 
     @Override
@@ -95,7 +95,7 @@ public class DefaultLeafletSettings implements LeafletSettings {
             stylesheetReference = cssReference;
         }
         
-        return stylesheetReference != null ? stylesheetReference : new WebjarsCssResourceReference("leaflet/current/leaflet.css");
+        return stylesheetReference != null ? stylesheetReference : Holder.LEAFLET_STYLESHEET;
     }
 
     @Override
@@ -116,6 +116,14 @@ public class DefaultLeafletSettings implements LeafletSettings {
     @Override
     public boolean autoAppendResources() {
         return this.autoAppend;
+    }
+    
+    /**
+     * Holder for on demand initialization of WebJar resources.
+     */
+    private static class Holder {
+        static final ResourceReference LEAFLET_JAVASCRIPT = LeafletJavascriptResourceReference.instance();
+        static final ResourceReference LEAFLET_STYLESHEET = LeafletStylesheetResourceReference.instance();
     }
 
     /**
