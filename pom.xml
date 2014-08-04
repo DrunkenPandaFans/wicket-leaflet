@@ -46,6 +46,7 @@
     <leaflet.version>0.7.3</leaflet.version>    
     <servlet.version>3.1.0</servlet.version>
     <junit.version>4.11</junit.version>
+    <mockito.version>1.9.5</mockito.version>
     <maven.java.source>1.7</maven.java.source>
     <maven.java.target>1.7</maven.java.target>
   </properties>
@@ -81,6 +82,13 @@
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${mockito.version}</version>
+        <scope>test</scope>
     </dependency>
   </dependencies>
 
