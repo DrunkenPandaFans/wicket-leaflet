@@ -34,10 +34,10 @@ public class DefaultLeafletSettings implements LeafletSettings {
     public static final String DEFAULT_VERSION = "0.7.3";
     
     /** Parametrized CDN url for javascript resource. */
-    private static final String JS_CDN_PATTERN = "http://cdn.leafletjs.com/leaflet-%1$s/leaflet.js";
+    public static final String JS_CDN_PATTERN = "http://cdn.leafletjs.com/leaflet-%1$s/leaflet.js";
     
     /** Parametrized CDN url for stylesheet resource. */
-    private static final String CSS_CDN_PATTERN = "http://cdn.leafletjs.com/leaflet-%1$s/leaflet.css";        
+    public static final String CSS_CDN_PATTERN = "http://cdn.leafletjs.com/leaflet-%1$s/leaflet.css";        
     
     private final String version;
     private final ResourceReference javascriptReference;
