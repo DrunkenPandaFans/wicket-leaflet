@@ -36,14 +36,14 @@ public abstract class AbstractLeafletTest {
     }
     
     private WebApplication createApplication() {
-        LeafletSettings settings = getSettings();
+        final LeafletSettings settings = getSettings();
         return new WebApplication() {
 
             @Override
             protected void init() {
                 super.init();
                 // create based on settings
-                Leaflet.install();
+                Leaflet.install(this, settings);
                 
                 // execute children init setup
                 AbstractLeafletTest.this.init(this);
