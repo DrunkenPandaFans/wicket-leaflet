@@ -16,6 +16,8 @@
 
 package sk.drunkenpanda.leaflet;
 
+import de.agilecoders.wicket.webjars.WebJarAssetLocator;
+import de.agilecoders.wicket.webjars.WicketWebjars;
 import org.apache.wicket.Application;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.request.resource.ResourceReference;
@@ -73,6 +75,10 @@ public final class Leaflet {
             
             if (settingsOrDefault.autoAppendResources()) {
                 application.getComponentInstantiationListeners().add(new LeafletResourceAppender());
+            }
+            
+            if (settingsOrDefault.useWebJars()) {
+                WicketWebjars.install(application);
             }
         }
     }

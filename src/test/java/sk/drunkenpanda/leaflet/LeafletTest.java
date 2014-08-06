@@ -17,6 +17,7 @@
 package sk.drunkenpanda.leaflet;
 
 import org.apache.wicket.Page;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.mock.MockHomePage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.TagTester;
@@ -24,7 +25,6 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import sk.drunkenpanda.leaflet.resources.LeafletJavascriptResourceReference;
 import sk.drunkenpanda.leaflet.resources.LeafletStylesheetResourceReference;
 
 /**
@@ -110,17 +110,7 @@ public class LeafletTest {
         LeafletSettings settings = Leaflet.getSettings();
     }
     
-    // webjar resources init            
-    @Test
-    public void testUseWebJars() {
-        WicketTester tester = new WicketTester(createWebApp(null, true));
-        tester.startResourceReference(LeafletJavascriptResourceReference.instance());
-        LeafletSettings settings = Leaflet.getSettings(tester.getApplication());
-        Assert.assertNotNull(tester.getLastResponseAsString());
-
-        tester.startResourceReference(LeafletStylesheetResourceReference.instance());
-        Assert.assertNotNull(tester.getLastResponseAsString());
-    }
+    //@TODO webjar resources init   
     
     @Test
     public void testAddResourcesIfAutoAppendIsUsed() {
