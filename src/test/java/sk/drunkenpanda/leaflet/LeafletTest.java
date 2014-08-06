@@ -17,19 +17,15 @@
 package sk.drunkenpanda.leaflet;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.markup.head.CssHeaderItem;
-import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.mock.MockHomePage;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.util.file.IResourceFinder;
 import org.apache.wicket.util.tester.TagTester;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import sk.drunkenpanda.leaflet.resources.LeafletJavascriptResourceReference;
+import sk.drunkenpanda.leaflet.resources.LeafletStylesheetResourceReference;
 
 /**
  *
