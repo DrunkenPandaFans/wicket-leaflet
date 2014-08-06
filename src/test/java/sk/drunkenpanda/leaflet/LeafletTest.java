@@ -30,9 +30,6 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-import sk.drunkenpanda.leaflet.resources.LeafletJavascriptResourceReference;
-import sk.drunkenpanda.leaflet.resources.LeafletStylesheetResourceReference;
 
 /**
  *
