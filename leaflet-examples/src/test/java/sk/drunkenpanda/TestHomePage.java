@@ -3,6 +3,8 @@ package sk.drunkenpanda;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
+import sk.drunkenpanda.leaflet.example.HomePage;
+import sk.drunkenpanda.leaflet.example.WicketApplication;
 
 /**
  * Simple test using the WicketTester
