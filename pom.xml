@@ -3,11 +3,17 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>sk.drunkenpanda</groupId>
-  <artifactId>wicket-leaflet</artifactId>
+  <artifactId>leaflet-parent</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
 
-  <name>Wicket Leaflet.js</name>
+  <modules>
+    <module>leaflet-examples</module>
+    <module>leaflet-core</module>
+  </modules>
+
+  <packaging>pom</packaging>
+
+  <name>leaflet-parent</name>
   <description>
       Library, that provides Leaflet.js map components for Apache Wicket.
   </description>
@@ -43,7 +49,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <wicket.version>6.13.0</wicket.version>
     <webjars.version>0.3.4</webjars.version>
-    <leaflet.version>0.7.3</leaflet.version>    
+    <leaflet.version>0.7.3</leaflet.version>
+    <log4j.version>1.2.16</log4j.version>
+    <slf4j.version>1.6.4</slf4j.version>
     <servlet.version>3.1.0</servlet.version>
     <junit.version>4.11</junit.version>
     <mockito.version>1.9.5</mockito.version>
@@ -51,46 +59,72 @@
     <maven.java.target>1.7</maven.java.target>
   </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.apache.wicket</groupId>
-      <artifactId>wicket-core</artifactId>
-      <version>${wicket.version}</version>
-    </dependency>
-    
-    <dependency>
+  <repositories>
+    <repository>
+      <id>Apache Nexus</id>
+      <url>https://repository.apache.org/content/repositories/snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.wicket</groupId>
+        <artifactId>wicket-core</artifactId>
+        <version>${wicket.version}</version>
+      </dependency>
+
+      <dependency>
         <groupId>de.agilecoders.wicket.webjars</groupId>
         <artifactId>wicket-webjars</artifactId>
         <version>${webjars.version}</version>
-    </dependency>
-    
-    <dependency>
+      </dependency>
+
+      <dependency>
         <groupId>org.webjars</groupId>
         <artifactId>leaflet</artifactId>
         <version>${leaflet.version}</version>
-    </dependency>        
-    
-    <dependency>
+      </dependency>
+
+      <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>javax.servlet-api</artifactId>
         <version>${servlet.version}</version>
         <scope>provided</scope>
-    </dependency>
+      </dependency>
 
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-    
-    <dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
         <version>${mockito.version}</version>
         <scope>test</scope>
-    </dependency>
-  </dependencies>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <resources>
