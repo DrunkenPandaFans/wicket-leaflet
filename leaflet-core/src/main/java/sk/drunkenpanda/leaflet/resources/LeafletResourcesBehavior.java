@@ -66,7 +66,7 @@ public class LeafletResourcesBehavior extends Behavior {
      * It provides access to settings for its subclasses by overriding this method.
      * 
      * @param settings settings installed in application
-     * @param response current {@link IHeaderResponse}
+     * @param response current {@link org.apache.wicket.markup.head.IHeaderResponse}
      * @throws IllegalArgumentException if any parameter is {@code null}.
      */
     public void renderHead(LeafletSettings settings, IHeaderResponse response) {

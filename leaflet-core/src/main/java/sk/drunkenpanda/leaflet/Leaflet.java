@@ -29,7 +29,7 @@ import org.apache.wicket.util.lang.Args;
  * If settings aren't provided default settings are used.
  * Wicket Leaflet uses WebJars for managing Leaflet.js resources.
  * If you don't want to use WebJars, you can use local or CDN resources by setting
- * all {@link ResourceReference}s int settings or by setting {@link LeafletSettings#useCDN() }
+ * all {@link org.apache.wicket.request.resource.ResourceReference}s int settings or by setting {@link LeafletSettings#useCDN() }
  * to {@code true}.
  * 
  * Library also appends resources automatically to all pages if {@link LeafletSettings#autoAppendResources() }

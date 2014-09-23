@@ -26,7 +26,7 @@ import org.apache.wicket.request.resource.UrlResourceReference;
  * Default implementation of Wicket Leaflet settings.
  * 
  * @author Jan Ferko
- * @see LeafletSettings
+ * @see sk.drunkenpanda.leaflet.LeafletSettings
  */
 public class DefaultLeafletSettings implements LeafletSettings {        
     
