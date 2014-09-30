@@ -10,6 +10,6 @@ public class HomePage extends WebPage {
 	public HomePage(final PageParameters parameters) {
 		super(parameters);
 
-		add(new Map<>("map"));
+		add(new Map("map"));
     }
 }
