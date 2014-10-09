@@ -51,6 +51,9 @@ public class Map<T> extends GenericPanel<T> {
     protected String getScript() {
         return "var " + getMarkupId() + " = L.map('" + getMarkupId() + "', {\n"
                 + "    center: [51.505, -0.09],\n"
-                + "    zoom: 13});";
+                + "    zoom: 13});"
+                + "var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';\n" 
+                + "osm = L.tileLayer(osmUrl, {maxZoom: 18});"
+                + "osm.addTo(" + getMarkupId() + ");";
     }
 }
