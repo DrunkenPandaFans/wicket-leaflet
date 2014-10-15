@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package sk.drunkenpanda.leaflet.components;
+package sk.drunkenpanda.leaflet.components.map;
 
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.OnLoadHeaderItem;
@@ -24,64 +24,52 @@ import sk.drunkenpanda.leaflet.models.LatLng;
 import sk.drunkenpanda.leaflet.models.LatLngBounds;
 import sk.drunkenpanda.leaflet.resources.LeafletResourcesBehavior;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Jan Ferko
  */
 public class Map extends GenericPanel<LatLng> {
 
-    private int zoom;
-    private int minZoom;
-    private int maxZoom;
-    private LatLngBounds maxBounds;
-
-    /** Interaction options */
-    private boolean dragging = true;
-    private boolean touchZoom = true;
-    private boolean scrollWheelZoom = true;
-    private boolean doubleClickZoom = true;
-    private boolean boxZoom = true;
-    private boolean tap = true;
-    private int tapTolerance = 15;
-    private boolean trackResize = true;
-    private boolean worldCopyJump = false;
-    private boolean closePopupOnClick = true;
-    private boolean bounceAtZoomLimit = true;
-
-    /** Keyboard navigation options */
-    private boolean keyboard = true;
-    private int keyboardPanOffset = 80;
-    private int keyboardZoomOffset = 1;
-
-    /** Panning inertia options */
-    private boolean inertia = true;
-    private int inertiaDeceleration = 3000;
-    private int inertiaMaxSpeed = 1500;
-    private Integer inertiaThreshold;
-
-    /** Control options */
-    private boolean zoomControl;
-    private boolean attributionControl = true;
-
-    /** Animation options */
-    private Boolean fadeAnimation;
-    private Boolean zoomAnimation;
-    private int zoomAnimationThreshold = 4;
-    private Boolean markerZoomAnimation;
+    private final java.util.Map<MapOptions, Object> options = new HashMap<>();
 
     public Map(String id) {
-        super(id);
+        this(id, null);
     }
 
     public Map(String id, IModel<LatLng> model) {
         super(id, model);
+        setDefaultOptions();
     }
 
     @Override
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
         response.render(OnLoadHeaderItem.forScript(getScript()));
-    }        
+    }
+
+    private void setDefaultOptions() {
+        options.put(MapOptions.DRAGGING, true);
+        options.put(MapOptions.TOUCH_ZOOM, true);
+        options.put(MapOptions.SCROLL_WHEEL_ZOOM, true);
+        options.put(MapOptions.BOX_ZOOM, true);
+        options.put(MapOptions.DOUBLE_CLICK_ZOOM, true);
+        options.put(MapOptions.TAP, true);
+        options.put(MapOptions.TAP_TOLERANCE, 15);
+        options.put(MapOptions.TRACK_RESIZE, true);
+        options.put(MapOptions.WORLD_COPY_JUMP, false);
+        options.put(MapOptions.CLOSE_POPUP_ON_CLICK, true);
+        options.put(MapOptions.BOUNCE_AT_ZOOM_LIMIT, true);
+        options.put(MapOptions.KEYBOARD, true);
+        options.put(MapOptions.KEYBOARD_PAN_OFFSET, 80);
+        options.put(MapOptions.KEYBOARD_ZOOM_OFFSET, 1);
+        options.put(MapOptions.INERTIA, true);
+        options.put(MapOptions.INERTIA_DECELARATION, 3000);
+        options.put(MapOptions.INERTIA_MAX_SPEED, 1500);
+        options.put(MapOptions.ATTRIBUTION_CONTROL, true);
+        options.put(MapOptions.ZOOM_ANIMATION_THRESHOLD, 4);
+    }
 
     @Override
     protected void onInitialize() {
@@ -98,46 +86,52 @@ public class Map extends GenericPanel<LatLng> {
     /**
      * @return initial map zoom
      */
-    public int getZoom() {
-        return zoom;
+    public Integer getZoom() {
+        return (Integer) options.get(MapOptions.ZOOM);
     }
 
     /**
      * Sets new initial map zoom
      * @param zoom initial map zoom
+     * @return instance of this map for chaining
      */
-    public void setZoom(int zoom) {
-        this.zoom = zoom;
+    public Map setZoom(int zoom) {
+        options.put(MapOptions.ZOOM, zoom);
+        return this;
     }
 
     /**
      * @return minimum zoom level of map.
      */
-    public int getMinZoom() {
-        return minZoom;
+    public Integer getMinZoom() {
+        return (Integer) options.get(MapOptions.MIN_ZOOM);
     }
 
     /**
      * Sets minimum zoom level of map. This zoom level overrides minimum zoom of any layer.
      * @param minZoom minimum zoom level
+     * @return this instance for chaining
      */
-    public void setMinZoom(int minZoom) {
-        this.minZoom = minZoom;
+    public Map setMinZoom(int minZoom) {
+        options.put(MapOptions.MIN_ZOOM, minZoom);
+        return this;
     }
 
     /**
      * @return maximum zoom level of map
      */
-    public int getMaxZoom() {
-        return maxZoom;
+    public Integer getMaxZoom() {
+        return (Integer) options.get(MapOptions.MAX_ZOOM);
     }
 
     /**
      * Sets maximum zoom level of map. This overrides maximum zoom of any layer.
      * @param maxZoom maximum zoom level
+     * @return this instance for chaining
      */
-    public void setMaxZoom(int maxZoom) {
-        this.maxZoom = maxZoom;
+    public Map setMaxZoom(int maxZoom) {
+        options.put(MapOptions.MAX_ZOOM, maxZoom);
+        return this;
     }
 
     /**
@@ -146,135 +140,153 @@ public class Map extends GenericPanel<LatLng> {
      * @return maximum geographical bounds
      */
     public LatLngBounds getMaxBounds() {
-        return maxBounds;
+        return (LatLngBounds) options.get(MapOptions.MAX_BOUND);
     }
 
     /**
      * Sets new maximum geographical bounds.
      * @param maxBounds maximum geographical bounds.
+     * @return this instance for chaining
      */
-    public void setMaxBounds(LatLngBounds maxBounds) {
-        this.maxBounds = maxBounds;
+    public Map setMaxBounds(LatLngBounds maxBounds) {
+        options.put(MapOptions.MAX_BOUND, maxBounds);
+        return this;
     }
 
     /**
      * @return whether map can be draggable with touch/mouse or not
      */
     public boolean isDragging() {
-        return dragging;
+        return (boolean) options.get(MapOptions.DRAGGING);
     }
 
     /**
      * Sets whether the map can be draggable or not
      * @param dragging if {@code true} map is draggable
+     * @return this instance for chaining
      */
-    public void setDragging(boolean dragging) {
-        this.dragging = dragging;
+    public Map setDragging(boolean dragging) {
+        options.put(MapOptions.DRAGGING, dragging);
+        return this;
     }
 
     /**
      * @return whether map can be zoomed by touch-dragging with two fingers.
      */
     public boolean isTouchZoom() {
-        return touchZoom;
+        return (boolean) options.get(MapOptions.TOUCH_ZOOM);
     }
 
     /**
      * Sets whether the map can be zoomed by touch-dragging with two fingers.
      * @param touchZoom if {@code true} map can be zoomed by touch
+     * @return this instance for chaining
      */
-    public void setTouchZoom(boolean touchZoom) {
-        this.touchZoom = touchZoom;
+    public Map setTouchZoom(boolean touchZoom) {
+        options.put(MapOptions.TOUCH_ZOOM, touchZoom);
+        return this;
     }
 
     /**
      * @return whether the map can be zoomed by using mouse wheel or not
      */
     public boolean isScrollWheelZoom() {
-        return scrollWheelZoom;
+        return (boolean) options.get(MapOptions.SCROLL_WHEEL_ZOOM);
     }
 
     /**
      * Sets whether the map can be zoomed by using mouse wheel or not.
      * @param scrollWheelZoom {@code true} if map can be zoomed by mouse wheel
+     * @return this instance for chaining
      */
-    public void setScrollWheelZoom(boolean scrollWheelZoom) {
-        this.scrollWheelZoom = scrollWheelZoom;
+    public Map setScrollWheelZoom(boolean scrollWheelZoom) {
+        options.put(MapOptions.SCROLL_WHEEL_ZOOM, scrollWheelZoom);
+        return this;
     }
 
     /**
      * @return whether the map can be zoomed by double-clicking on it and zoom out by double-clicking while pressing shift button.
      */
     public boolean isDoubleClickZoom() {
-        return doubleClickZoom;
+        return (boolean) options.get(MapOptions.DOUBLE_CLICK_ZOOM);
     }
 
     /**
      * Sets whether the map can be zoomed by double-clicking on it.
      * @param doubleClickZoom  {@code true} if map can be zoomed by double-clicking
+     * @return this instance for chaining
      */
-    public void setDoubleClickZoom(boolean doubleClickZoom) {
-        this.doubleClickZoom = doubleClickZoom;
+    public Map setDoubleClickZoom(boolean doubleClickZoom) {
+        options.put(MapOptions.DOUBLE_CLICK_ZOOM, doubleClickZoom);
+        return this;
     }
 
     /**
      * @return whether the map can be zoomed to rectangular area specified by dragging the mouse while pressing shift key.
      */
     public boolean isBoxZoom() {
-        return boxZoom;
+        return (boolean) options.get(MapOptions.BOX_ZOOM);
     }
 
     /**
      * Sets whether the map can be zoomed to rectangular area specified by dragging the mouse while pressing shift key.
      * @param boxZoom {@code true} if map can be zoomed by boxing
+     * @return this instance for chaining
      */
-    public void setBoxZoom(boolean boxZoom) {
-        this.boxZoom = boxZoom;
+    public Map setBoxZoom(boolean boxZoom) {
+        options.put(MapOptions.BOX_ZOOM, boxZoom);
+        return this;
     }
 
     /**
      * @return whether the map enables mobile hacks for supporting instant taps and touch holds (fired as contextmenu)
      */
     public boolean isTap() {
-        return tap;
+        return (boolean) options.get(MapOptions.TAP);
     }
 
     /**
      * Sets whether the map enables mobile hacks for supporting instant taps and touch holds.
      * @param tap {@code true} if map enables taps and touch holds
+     * @return this instance for chaining
      */
-    public void setTap(boolean tap) {
-        this.tap = tap;
+    public Map setTap(boolean tap) {
+        options.put(MapOptions.TAP, tap);
+        return this;
     }
 
     /**
      * @return the max number of pixels a user can shift his finger during touch for it to be considered valid tap.
      */
     public int getTapTolerance() {
-        return tapTolerance;
+        return (int) options.get(MapOptions.TAP_TOLERANCE);
     }
 
     /**
      * Sets max number of pixels a user can shift his finger during touch for it to be considered valid tap
      * @param tapTolerance max number of pixels a user can shift his finger during touch.
+     * @return this instance for chaining
      */
-    public void setTapTolerance(int tapTolerance) {
-        this.tapTolerance = tapTolerance;
+    public Map setTapTolerance(int tapTolerance) {
+        options.put(MapOptions.TAP_TOLERANCE, tapTolerance);
+        return this;
     }
 
     /**
      * @return whether the map automatically handles browser resize to update itself.
      */
     public boolean isTrackResize() {
-        return trackResize;
+        return (boolean) options.get(MapOptions.TRACK_RESIZE);
     }
 
     /**
      * Sets whether the map should automatically handle browser resize
      * @param trackResize {@code true} if map handles browser resizing
+     * @return this instance for chaining
      */
-    public void setTrackResize(boolean trackResize) {
-        this.trackResize = trackResize;
+    public Map setTrackResize(boolean trackResize) {
+        options.put(MapOptions.TRACK_RESIZE, trackResize);
+        return this;
     }
 
     /**
@@ -283,30 +295,34 @@ public class Map extends GenericPanel<LatLng> {
      * @return whether map handles panning to another copy of world seamlessly
      */
     public boolean isWorldCopyJump() {
-        return worldCopyJump;
+        return (boolean) options.get(MapOptions.WORLD_COPY_JUMP);
     }
 
     /**
      * Sets whether map should handle panning to another copy of world seamlessly.
      * @param worldCopyJump {@code true} map handles seamless panning between worlds
+     * @return this instance for chaining
      */
-    public void setWorldCopyJump(boolean worldCopyJump) {
-        this.worldCopyJump = worldCopyJump;
+    public Map setWorldCopyJump(boolean worldCopyJump) {
+        options.put(MapOptions.WORLD_COPY_JUMP, worldCopyJump);
+        return this;
     }
 
     /**
      * @return whether popup windows should close on user click
      */
     public boolean isClosePopupOnClick() {
-        return closePopupOnClick;
+        return (boolean) options.get(MapOptions.CLOSE_POPUP_ON_CLICK);
     }
 
     /**
      * Sets whether popup window should close on click.
      * @param closePopupOnClick {@code true} popup window closes on user click.
+     * @return this instance for chaining
      */
-    public void setClosePopupOnClick(boolean closePopupOnClick) {
-        this.closePopupOnClick = closePopupOnClick;
+    public Map setClosePopupOnClick(boolean closePopupOnClick) {
+        options.put(MapOptions.CLOSE_POPUP_ON_CLICK, closePopupOnClick);
+        return this;
     }
 
     /**
@@ -314,61 +330,69 @@ public class Map extends GenericPanel<LatLng> {
      * @return whether map respects zoom limits
      */
     public boolean isBounceAtZoomLimit() {
-        return bounceAtZoomLimit;
+        return (boolean) options.get(MapOptions.BOUNCE_AT_ZOOM_LIMIT);
     }
 
     /**
      * Sets whether map respects zoom limits or not.
      * @param bounceAtZoomLimit if {@code true} map respects zoom limit.
+     * @return this instance for chaining
      * @see #isBounceAtZoomLimit()
      */
-    public void setBounceAtZoomLimit(boolean bounceAtZoomLimit) {
-        this.bounceAtZoomLimit = bounceAtZoomLimit;
+    public Map setBounceAtZoomLimit(boolean bounceAtZoomLimit) {
+        options.put(MapOptions.BOUNCE_AT_ZOOM_LIMIT, bounceAtZoomLimit);
+        return this;
     }
 
     /**
      * @return makes the map focusable and allows users to navigate the map with keyboard arrows and +/- keys.
      */
     public boolean isKeyboard() {
-        return keyboard;
+        return (boolean) options.get(MapOptions.KEYBOARD);
     }
 
     /**
      * Sets whether map can be navigated by keyboard.
      * @param keyboard if {@code true} map is navigated by keyboard
+     * @return this instance for chaining
      */
-    public void setKeyboard(boolean keyboard) {
-        this.keyboard = keyboard;
+    public Map setKeyboard(boolean keyboard) {
+        options.put(MapOptions.KEYBOARD, keyboard);
+        return this;
     }
 
     /**
      * @return amount of pixels to pan when pressing an arrow key
      */
     public int getKeyboardPanOffset() {
-        return keyboardPanOffset;
+        return (int) options.get(MapOptions.KEYBOARD_PAN_OFFSET);
     }
 
     /**
      * Sets amount of pixels to pan when pressing an arrow key
      * @param keyboardPanOffset amount of pixels to pan when pressing an arrow key
+     * @return this instance for chaining
      */
-    public void setKeyboardPanOffset(int keyboardPanOffset) {
-        this.keyboardPanOffset = keyboardPanOffset;
+    public Map setKeyboardPanOffset(int keyboardPanOffset) {
+        options.put(MapOptions.KEYBOARD_PAN_OFFSET, keyboardPanOffset);
+        return this;
     }
 
     /**
      * @return number of zoom level to change when pressing +/-
      */
     public int getKeyboardZoomOffset() {
-        return keyboardZoomOffset;
+        return (int) options.get(MapOptions.KEYBOARD_ZOOM_OFFSET);
     }
 
     /**
      * Sets number of zoom levels to change when pressing +/-.
      * @param keyboardZoomOffset number of zoom levels to change
+     * @return this instance for chaining
      */
-    public void setKeyboardZoomOffset(int keyboardZoomOffset) {
-        this.keyboardZoomOffset = keyboardZoomOffset;
+    public Map setKeyboardZoomOffset(int keyboardZoomOffset) {
+        options.put(MapOptions.KEYBOARD_ZOOM_OFFSET, keyboardZoomOffset);
+        return this;
     }
 
     /**
@@ -377,15 +401,17 @@ public class Map extends GenericPanel<LatLng> {
      * @return whether map uses inertia effect
      */
     public boolean isInertia() {
-        return inertia;
+        return (boolean) options.get(MapOptions.INERTIA);
     }
 
     /**
      * Sets whether map uses inertia effect.
      * @param inertia if {@code true} map should use inertia effect
+     * @return this instance for chaining
      */
-    public void setInertia(boolean inertia) {
-        this.inertia = inertia;
+    public Map setInertia(boolean inertia) {
+        options.put(MapOptions.INERTIA, inertia);
+        return this;
     }
 
     /**
@@ -393,105 +419,119 @@ public class Map extends GenericPanel<LatLng> {
      * @return rate with which inertia movement slows down
      */
     public int getInertiaDeceleration() {
-        return inertiaDeceleration;
+        return (int) options.get(MapOptions.INERTIA_DECELARATION);
     }
 
     /**
      * Sets the rate with which inertia movement slows down in pixels/second.
      * @param inertiaDeceleration rate with which inertia movement slows down.
+     * @return this instance for chaining
      */
-    public void setInertiaDeceleration(int inertiaDeceleration) {
-        this.inertiaDeceleration = inertiaDeceleration;
+    public Map setInertiaDeceleration(int inertiaDeceleration) {
+        options.put(MapOptions.INERTIA_DECELARATION, inertiaDeceleration);
+        return this;
     }
 
     /**
      * @return maximum speed of inertia acceleration in pixels/second
      */
     public int getInertiaMaxSpeed() {
-        return inertiaMaxSpeed;
+        return (int) options.get(MapOptions.INERTIA_MAX_SPEED);
     }
 
     /**
      * Sets maximum speed of inertia acceleration in pixels/second
      * @param inertiaMaxSpeed new maximum speed
+     * @return this instance for chaining
      */
-    public void setInertiaMaxSpeed(int inertiaMaxSpeed) {
-        this.inertiaMaxSpeed = inertiaMaxSpeed;
+    public Map setInertiaMaxSpeed(int inertiaMaxSpeed) {
+        options.put(MapOptions.INERTIA_MAX_SPEED, inertiaMaxSpeed);
+        return this;
     }
 
     /**
      * @return number of milliseconds that should pass between stopping the movement and releasing touch or mouse.
      */
     public Integer getInertiaThreshold() {
-        return inertiaThreshold;
+        return (Integer) options.get(MapOptions.INERTIA_THRESHOLD);
     }
 
     /**
      * Sets new inertia threshold.
      * @param inertiaThreshold number of milliseconds that should pass between stopping the movement and releasing touch or mouse
+     * @return this instance for chaining
      */
-    public void setInertiaThreshold(Integer inertiaThreshold) {
-        this.inertiaThreshold = inertiaThreshold;
+    public Map setInertiaThreshold(Integer inertiaThreshold) {
+        options.put(MapOptions.INERTIA_THRESHOLD, inertiaThreshold);
+        return this;
     }
 
     /**
      * @return whether the zoom control is added to the map
      */
-    public boolean isZoomControl() {
-        return zoomControl;
+    public Boolean isZoomControl() {
+        return (Boolean) options.get(MapOptions.ZOOM_CONTROL);
     }
 
     /**
      * Sets whether the zoom control is added to the map.
      * @param zoomControl if {@code true} zoom control is added
+     * @return this instance for chaining
      */
-    public void setZoomControl(boolean zoomControl) {
-        this.zoomControl = zoomControl;
+    public Map setZoomControl(boolean zoomControl) {
+        options.put(MapOptions.ZOOM_CONTROL, zoomControl);
+        return this;
     }
 
     /**
      * @return whether the attribution control is added to the map
      */
     public boolean isAttributionControl() {
-        return attributionControl;
+        return (boolean) options.get(MapOptions.ATTRIBUTION_CONTROL);
     }
 
     /**
      * Sets whether the attribution control is added to the map.
      * @param attributionControl if {@code true} attribution control is added
+     * @return this instance for chaining
      */
-    public void setAttributionControl(boolean attributionControl) {
-        this.attributionControl = attributionControl;
+    public Map setAttributionControl(boolean attributionControl) {
+        options.put(MapOptions.ATTRIBUTION_CONTROL, attributionControl);
+        return this;
     }
 
     /**
      * @return whether the fade animation is enabled
      */
     public Boolean getFadeAnimation() {
-        return fadeAnimation;
+        return (Boolean) options.get(MapOptions.FADE_ANIMATION);
     }
 
     /**
      * Sets whether the fade animation should be enabled.
      * @param fadeAnimation if {@code true} fade animation is enabled
+     * @return this instance for chaining
      */
-    public void setFadeAnimation(Boolean fadeAnimation) {
-        this.fadeAnimation = fadeAnimation;
+    public Map setFadeAnimation(boolean fadeAnimation) {
+        options.put(MapOptions.FADE_ANIMATION, fadeAnimation);
+        return this;
     }
 
     /**
      * @return whether the zoom animation is enabled.
      */
     public Boolean getZoomAnimation() {
-        return zoomAnimation;
+        return (Boolean) options.get(MapOptions.ZOOM_ANIMATION);
     }
 
     /**
      * Sets whether the zoom animation should be enabled.
      * @param zoomAnimation if {@code true} zoom animation is enabled
+     * @return this instance for chaining
      */
-    public void setZoomAnimation(Boolean zoomAnimation) {
-        this.zoomAnimation = zoomAnimation;
+    public Map setZoomAnimation(Boolean zoomAnimation) {
+        options.put(MapOptions.ZOOM_ANIMATION, zoomAnimation);
+        return this;
     }
 
     /**
@@ -499,15 +539,17 @@ public class Map extends GenericPanel<LatLng> {
      * @return threshold for using zoom animation
      */
     public int getZoomAnimationThreshold() {
-        return zoomAnimationThreshold;
+        return (int) options.get(MapOptions.ZOOM_ANIMATION_THRESHOLD);
     }
 
     /**
      * Sets new threshold to not use zoom animation.
      * @param zoomAnimationThreshold new threshold for using zoom animation
+     * @return this instance for chaining
      */
-    public void setZoomAnimationThreshold(int zoomAnimationThreshold) {
-        this.zoomAnimationThreshold = zoomAnimationThreshold;
+    public Map setZoomAnimationThreshold(int zoomAnimationThreshold) {
+        options.put(MapOptions.ZOOM_ANIMATION_THRESHOLD, zoomAnimationThreshold);
+        return this;
     }
 
     /**
@@ -515,14 +557,16 @@ public class Map extends GenericPanel<LatLng> {
      * @return whether marker animates its zoom with zoom animation.
      */
     public Boolean getMarkerZoomAnimation() {
-        return markerZoomAnimation;
+        return (Boolean) options.get(MapOptions.MARKER_ZOOM_ANIMATION);
     }
 
     /**
      * Sets if markers should be animated with zoom animation.
      * @param markerZoomAnimation if {@code true} markers are animated with zoom animation
+     * @return this instance for chaining
      */
-    public void setMarkerZoomAnimation(Boolean markerZoomAnimation) {
-        this.markerZoomAnimation = markerZoomAnimation;
+    public Map setMarkerZoomAnimation(Boolean markerZoomAnimation) {
+        options.put(MapOptions.MARKER_ZOOM_ANIMATION, markerZoomAnimation);
+        return this;
     }
 }
