@@ -2,7 +2,7 @@ package sk.drunkenpanda.leaflet.example;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import sk.drunkenpanda.leaflet.components.Map;
+import sk.drunkenpanda.leaflet.components.map.Map;
 
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
