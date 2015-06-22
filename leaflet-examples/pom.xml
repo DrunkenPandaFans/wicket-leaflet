@@ -21,7 +21,7 @@
     <parent>
         <artifactId>leaflet-parent</artifactId>
         <groupId>sk.drunkenpanda</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -32,7 +32,6 @@
 
     <properties>
         <jetty.version>7.6.13.v20130916</jetty.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -43,7 +42,7 @@
         <dependency>
             <groupId>sk.drunkenpanda</groupId>
             <artifactId>wicket-leaflet</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
