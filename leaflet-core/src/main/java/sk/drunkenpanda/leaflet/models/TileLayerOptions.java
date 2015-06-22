@@ -1,11 +1,10 @@
 package sk.drunkenpanda.leaflet.models;
 
-import com.google.common.collect.Lists;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.google.common.collect.Lists;
 
 public class TileLayerOptions implements Serializable {
 
@@ -62,7 +61,7 @@ public class TileLayerOptions implements Serializable {
         this.opacity = 1.0;
         this.detectRetina = false;
         this.reuseTiles = false;
-        this.extraParameters = new HashMap<>();
+        this.extraParameters = new HashMap<String, String>();
     }
 
     public int getMinZoom() {

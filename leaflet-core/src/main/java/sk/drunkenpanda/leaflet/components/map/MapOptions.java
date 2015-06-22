@@ -1,11 +1,10 @@
 package sk.drunkenpanda.leaflet.components.map;
 
-import sk.drunkenpanda.leaflet.models.ILayer;
-import sk.drunkenpanda.leaflet.models.LatLngBounds;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import sk.drunkenpanda.leaflet.models.ILayer;
+import sk.drunkenpanda.leaflet.models.LatLngBounds;
 
 public class MapOptions implements Serializable {
 
@@ -67,7 +66,7 @@ public class MapOptions implements Serializable {
         this.inertiaMaxSpeed = 1500;
         this.attributionControl = true;
         this.zoomAnimationThreshold = 4;
-        this.layers = new ArrayList<>();
+        this.layers = new ArrayList<ILayer>();
     }
 
     /**
