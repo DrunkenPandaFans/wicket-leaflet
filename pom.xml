@@ -4,7 +4,7 @@
 
   <groupId>sk.drunkenpanda</groupId>
   <artifactId>leaflet-parent</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.0.1-SNAPSHOT</version>
 
   <modules>
     <module>leaflet-examples</module>
@@ -47,7 +47,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <wicket.version>6.13.0</wicket.version>
+    <wicket.version>6.18.0</wicket.version>
     <webjars.version>0.3.4</webjars.version>
     <leaflet.version>0.7.3</leaflet.version>
     <log4j.version>1.2.16</log4j.version>
@@ -55,8 +55,8 @@
     <servlet.version>3.1.0</servlet.version>
     <junit.version>4.11</junit.version>
     <mockito.version>1.9.5</mockito.version>
-    <maven.java.source>1.7</maven.java.source>
-    <maven.java.target>1.7</maven.java.target>
+    <maven.java.source>1.6</maven.java.source>
+    <maven.java.target>1.6</maven.java.target>
   </properties>
 
   <repositories>
