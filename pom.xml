@@ -48,7 +48,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <wicket.version>6.18.0</wicket.version>
-    <webjars.version>0.3.4</webjars.version>
+    <webjars.version>0.4.7</webjars.version>
     <leaflet.version>0.7.3</leaflet.version>
     <log4j.version>1.2.16</log4j.version>
     <slf4j.version>1.6.4</slf4j.version>
