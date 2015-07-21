@@ -5,7 +5,7 @@ jdk:
 script:
   - mvn clean compile test
 after_success:
-  - mvn clean test jacoco:report coveralls:jacoco
+  - mvn clean test jacoco:report coveralls:report
 notifications:
   webhooks:
     urls:
