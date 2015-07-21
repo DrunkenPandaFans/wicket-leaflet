@@ -6,3 +6,10 @@ script:
   - mvn clean compile test
 after_success:
   - mvn clean test jacoco:report coveralls:jacoco
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/d2b92385ecce89375e48
+    on_success: change
+    on_failure: always
+    on_start: never
