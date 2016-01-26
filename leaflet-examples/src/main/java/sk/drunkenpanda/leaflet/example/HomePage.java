@@ -16,7 +16,7 @@ public class HomePage extends WebPage {
 	public HomePage(final PageParameters parameters) {
 		super(parameters);
 
-		final IModel<LatLng> center = new Model<>(new LatLng(37.7833, -122.4167));
+		final IModel<LatLng> center = new Model<LatLng>(new LatLng(37.7833, -122.4167));
 
 		final TileLayerOptions tilesOptions = new TileLayerOptions()
 				.setAttribution("Map data &copy;...")
