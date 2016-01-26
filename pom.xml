@@ -52,7 +52,7 @@
     <leaflet.version>0.7.3</leaflet.version>
     <log4j.version>1.2.16</log4j.version>
     <slf4j.version>1.6.4</slf4j.version>
-    <servlet.version>3.1.0</servlet.version>
+    <servlet.version>2.5</servlet.version>
     <junit.version>4.11</junit.version>
     <mockito.version>1.9.5</mockito.version>
 
@@ -98,7 +98,7 @@
 
       <dependency>
         <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
+        <artifactId>servlet-api</artifactId>
         <version>${servlet.version}</version>
       </dependency>
 

@@ -27,11 +27,11 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>leaflet-examples</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>leaflet-examples</name>
 
     <properties>
-        <jetty.version>7.6.13.v20130916</jetty.version>
+        <jetty.version>9.3.1.v20150714</jetty.version>
     </properties>
 
     <dependencies>
@@ -60,10 +60,25 @@
 
         <!--  JETTY DEPENDENCIES FOR TESTING  -->
         <dependency>
-            <groupId>org.eclipse.jetty.aggregate</groupId>
-            <artifactId>jetty-all-server</artifactId>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
             <version>${jetty.version}</version>
-            <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>apache-jsp</artifactId>
+          <version>${jetty.version}</version>
+          <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>apache-jstl</artifactId>
+            <version>${jetty.version}</version>
+            <type>pom</type>
         </dependency>
     </dependencies>
 
@@ -72,6 +87,10 @@
             <resource>
                 <filtering>false</filtering>
                 <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
+                <directory>src/main/webapp</directory>
             </resource>
             <resource>
                 <filtering>false</filtering>
@@ -100,5 +119,21 @@
                 </excludes>
             </testResource>
         </testResources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>

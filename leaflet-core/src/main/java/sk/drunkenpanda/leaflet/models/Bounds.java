@@ -17,18 +17,17 @@
 package sk.drunkenpanda.leaflet.models;
 
 import java.io.Serializable;
-import java.util.Objects;
 import org.apache.wicket.util.lang.Args;
 
 /**
  * Represents a rectangular area in pixels.
- * 
+ *
  * @author Jan Ferko
  */
 public class Bounds implements Serializable {
-    
+
     private final Point topLeft;
-    
+
     private final Point bottomRight;
 
     public Bounds(Point topLeft, Point bottomRight) {
@@ -36,40 +35,40 @@ public class Bounds implements Serializable {
         Args.notNull(bottomRight, "bottomRight");
         Args.isTrue(topLeft.getX() <= bottomRight.getX(), "X coordinate of topLeft must be less than or equal to X coordinate of bottomRight");
         Args.isTrue(topLeft.getY() <= bottomRight.getY(), "Y coordinate of topLeft must be less than or equal to Y coordinate of bottomRight");
-        
+
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
     }
-    
-    /**     
+
+    /**
      * @return the top-left corner of bounds
      */
     public Point getTopLeft() {
         return topLeft;
     }
-    
-    /**     
+
+    /**
      * @return the bottom-right corner of bounds
      */
     public Point getBottomRight() {
         return bottomRight;
     }
-    
-    /**     
+
+    /**
      * @return the center point of bounds
      */
     public Point getCenter() {
         double centerX = (bottomRight.getX() + topLeft.getX()) / 2;
         double centerY = (bottomRight.getY() + topLeft.getY()) / 2;
-                
+
         return new Point(centerX, centerY);
     }
-    
+
     /**
      * {@inheritDoc }
-     * 
+     *
      * Compares the current bounds and object based on top-left and bottom-right corners of bounds.
-     * 
+     *
      * @param obj the object, that is compared with the current point
      * @return {@code true} if object is equal to the current point, {@code false} otherwise.
      */
@@ -78,7 +77,7 @@ public class Bounds implements Serializable {
         if (!(obj instanceof Bounds)) {
             return false;
         }
-        
+
         Bounds other = (Bounds) obj;
         return topLeft.equals(other.topLeft) && bottomRight.equals(other.bottomRight);
     }
@@ -90,8 +89,8 @@ public class Bounds implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.topLeft);
-        hash = 53 * hash + Objects.hashCode(this.bottomRight);
+        hash = 53 * hash + this.topLeft.hashCode();
+        hash = 53 * hash + this.bottomRight.hashCode();
         return hash;
     }
 
