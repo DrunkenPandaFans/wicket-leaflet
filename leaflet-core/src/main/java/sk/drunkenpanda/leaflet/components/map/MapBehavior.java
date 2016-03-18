@@ -46,7 +46,7 @@ public final class MapBehavior extends Behavior {
         String options = renderer.toJson(map.getOptions());
         String center = renderer.toJson(map.getModelObject());
 
-        return String.format("var %1$s = WicketLeaflet.Map.prepareOptions(%2$s, %3$s);",
+        return String.format("var %1$s = WicketLeaflet.Map.prepareOptions(%2$s, %3$s);\n",
                 optionsVarName, options, center);
     }
 }

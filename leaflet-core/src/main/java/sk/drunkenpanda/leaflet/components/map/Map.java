@@ -43,11 +43,7 @@ public class Map extends GenericPanel<LatLng> {
         super(id, model);
         Args.notNull(options, "options");
         this.options = options;
-    }
-
-    @Override
-    protected void onInitialize() {
-        super.onInitialize();
+        
         add(LeafletResourcesBehavior.instance());
         add(new MapBehavior(this));
     }
