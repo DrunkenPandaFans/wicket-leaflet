@@ -24,7 +24,7 @@ import sk.drunkenpanda.leaflet.json.model.JsonMouseEvent;
 
 public abstract class MouseEventBehavior extends LeafletAjaxEventBehavior<MouseEvent, JsonMouseEvent> {
 
-    private static final MapEventType[] SUPPORTED_EVENTS = new MapEventType[] {
+    static final MapEventType[] SUPPORTED_EVENTS = new MapEventType[] {
         MapEventType.CLICK, MapEventType.DOUBLE_CLICK, MapEventType.MOUSEDOWN,
         MapEventType.MOUSEMOVE, MapEventType.MOUSEOUT, MapEventType.MOUSEOVER,
         MapEventType.MOUSEUP, MapEventType.CONTEXT_MOVE, MapEventType.PRECLICK,
