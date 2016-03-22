@@ -20,7 +20,6 @@ import java.util.Set;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
 import org.apache.wicket.util.tester.WicketTester;
 import static org.junit.Assert.*;
@@ -30,8 +29,6 @@ import sk.drunkenpanda.leaflet.AbstractLeafletTest;
 import sk.drunkenpanda.leaflet.components.map.Map;
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.MouseEvent;
-import sk.drunkenpanda.leaflet.json.JsonRenderer;
-import sk.drunkenpanda.leaflet.json.JsonRendererFactory;
 import sk.drunkenpanda.leaflet.json.model.JsonLatLng;
 import sk.drunkenpanda.leaflet.json.model.JsonMouseEvent;
 import sk.drunkenpanda.leaflet.json.model.JsonPoint;
@@ -127,20 +124,6 @@ public final class MouseEventBehaviorTest extends AbstractLeafletTest {
         }
 
         assertEquals(expected.getType(), actual.getType());
-    }
-
-    private MockHttpServletRequest prepareRequest(WicketTester tester, AbstractAjaxBehavior behavior, MapEventType eventType, JsonMouseEvent event) {
-        JsonRenderer jsonRenderer = JsonRendererFactory.getJsonRenderer();
-        String json = jsonRenderer.toJson(event);
-        MockHttpServletRequest request = new MockHttpServletRequest(tester.getApplication(), tester.getHttpSession(), tester.getServletContext());
-
-        String callbackUrl = behavior.getCallbackUrl().toString();
-        request.addHeader("Wicket-Ajax", "true");
-        request.addHeader("Wicket-Ajax-BaseURL", callbackUrl);
-        request.setURL(callbackUrl);
-        request.setParameter(eventType.getJavascriptName(), json);
-
-        return request;
     }
 
 }
