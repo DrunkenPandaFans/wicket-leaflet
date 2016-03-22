@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ferko.
+ * Copyright 2016 Jan Ferko.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,9 @@
 
 package sk.drunkenpanda.leaflet.behaviors;
 
+import java.util.Set;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Sets;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
@@ -34,6 +36,10 @@ import sk.drunkenpanda.leaflet.json.model.JsonLatLng;
 import sk.drunkenpanda.leaflet.json.model.JsonMouseEvent;
 import sk.drunkenpanda.leaflet.json.model.JsonPoint;
 
+/**
+ *
+ * @author Jan Ferko
+ */
 public final class MouseEventBehaviorTest extends AbstractLeafletTest {
 
     private JsonMouseEvent jsonMouseEvent;
@@ -53,6 +59,26 @@ public final class MouseEventBehaviorTest extends AbstractLeafletTest {
         jsonMouseEvent.setContainerPoint(point);
         jsonMouseEvent.setLayerPoint(point);
         jsonMouseEvent.setType("click");
+    }
+
+    @Test
+    public void testDoesNotAllowUnsupportedEvents() {
+        final Set<MapEventType> eventTypes = Sets.newHashSet(MapEventType.values());
+        final Set<MapEventType> supportedEventTypes = Sets.newHashSet(MouseEventBehavior.SUPPORTED_EVENTS);
+        final Set<MapEventType> unsupportedEventTypes = Sets.difference(eventTypes, supportedEventTypes);
+
+        for (MapEventType eventType : unsupportedEventTypes) {
+            try {
+                final MouseEventBehavior behavior = new MouseEventBehavior(eventType) {
+                    @Override
+                    protected void onEvent(MouseEvent event, AjaxRequestTarget target) {
+                    }
+                };
+                fail("MouseEventBehavior should throw IllegalArgumentException if unsupported event type is provided.");
+            } catch (IllegalArgumentException ex) {
+                // ok
+            }
+        }
     }
 
     @Test
