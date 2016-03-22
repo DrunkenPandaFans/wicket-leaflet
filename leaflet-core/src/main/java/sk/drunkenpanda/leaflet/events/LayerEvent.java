@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ferko.
+ * Copyright 2016 Jan Ferko.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,37 @@
 
 package sk.drunkenpanda.leaflet.events;
 
+import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.models.ILayer;
 
+/**
+ * Event that triggers when layer is added or removed to/from map.
+ *
+ * @author Jan Ferko
+ */
 public final class LayerEvent extends Event {
 
+    /**
+     * The layer that was added or removed.
+     */
     private final ILayer layer;
 
-    public LayerEvent(String type, ILayer layer) {
+    /**
+     * Constructs new layer event for given parameters.
+     *
+     * @param type the event type
+     * @param layer layer that was added or removed
+     */
+    public LayerEvent(MapEventType type, ILayer layer) {
         super(type);
         this.layer = layer;
     }
 
+    /**
+     * Returns layer that was added or removed.
+     *
+     * @return layer that was added or removed
+     */
     public ILayer getLayer() {
         return this.layer;
     }

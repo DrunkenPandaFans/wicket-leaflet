@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ferko.
+ * Copyright 2016 Jan Ferko.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,33 @@
 
 package sk.drunkenpanda.leaflet.events;
 
+import sk.drunkenpanda.leaflet.components.map.MapEventType;
+
+/**
+ * Event that triggers when dragging map component ends.
+ *
+ * @author Jan Ferko
+ */
 public final class DragEndEvent extends Event {
 
     private final Number distance;
 
-    public DragEndEvent(String type, Number distance) {
+    /**
+     * Constructs new drag end event for given distance.
+     *
+     * @param type the event type.
+     * @param distance the distance in pixels the draggable element was moved.
+     */
+    public DragEndEvent(MapEventType type, Number distance) {
         super(type);
         this.distance = distance;
     }
 
+    /**
+     * Returns the distance in pixels the draggable element was moved.
+     *
+     * @return the distance in pixels the draggable element was moved
+     */
     public Number getDistance() {
         return this.distance;
     }

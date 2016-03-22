@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ferko.
+ * Copyright 2016 Jan Ferko.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package sk.drunkenpanda.leaflet.json.model;
 
+import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.LocationEvent;
 
 public final class JsonLocationEvent implements JsonEntity<LocationEvent> {
@@ -112,7 +113,8 @@ public final class JsonLocationEvent implements JsonEntity<LocationEvent> {
 
     @Override
     public LocationEvent toModel() {
-        return new LocationEvent(type, latLng.toModel(), latLngBounds.toModel(), accuracy, altitude,
+        MapEventType eventType = MapEventType.find(type);
+        return new LocationEvent(eventType, latLng.toModel(), latLngBounds.toModel(), accuracy, altitude,
                 altitudeAccuracy, heading, speed, timestamp);
     }
 

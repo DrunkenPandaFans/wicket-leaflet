@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ferko.
+ * Copyright 2016 Jan Ferko.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@
 
 package sk.drunkenpanda.leaflet.json.model;
 
+import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.Event;
 
 /**
  *
  * @author Jan Ferko
- * @sa.date 2016-03-18T04:19:27+0100
  */
 public class JsonEvent implements JsonEntity<Event> {
 
@@ -37,7 +37,8 @@ public class JsonEvent implements JsonEntity<Event> {
 
     @Override
     public Event toModel() {
-        return new Event(type);
+        MapEventType eventType = MapEventType.find(type);
+        return new Event(eventType);
     }
 
 }

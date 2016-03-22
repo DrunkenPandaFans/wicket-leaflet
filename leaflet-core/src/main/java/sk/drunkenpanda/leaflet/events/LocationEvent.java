@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ferko.
+ * Copyright 2016 Jan Ferko.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,30 +16,73 @@
 
 package sk.drunkenpanda.leaflet.events;
 
+import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.models.LatLng;
 import sk.drunkenpanda.leaflet.models.LatLngBounds;
 
+/**
+ * Event triggered when geolocation went successfully.
+ *
+ * @author Jan Ferko
+ */
 public final class LocationEvent extends Event {
 
+    /**
+     * Detected geographical location of the user.
+     */
     private final LatLng latLng;
 
+    /**
+     * Geographical boundaries of the area user is located in (with respect to the accuracy of location).
+     */
     private final LatLngBounds latLngBounds;
 
-    private final Number accuracy;
+    /**
+     * Accuracy of location in meters.
+     */
+    private final double accuracy;
 
-    private final Number altitude;
+    /**
+     * Height of the position above the WSG84 ellipsoid in meters.
+     */
+    private final double altitude;
 
-    private final Number altitudeAccuracy;
+    /**
+     * Accuracy of altitude in meters.
+     */
+    private final double altitudeAccuracy;
 
-    private final Number heading;
+    /**
+     * The direction of travel in degrees counting clockwise from true North.
+     */
+    private final double heading;
 
-    private final Number speed;
+    /**
+     * Current velocity in meters per second.
+     */
+    private final double speed;
 
-    private final Number timestamp;
+    /**
+     * The time when position was acquired in seconds elapsed since January 1, 1970.
+     */
+    private final double timestamp;
 
-    public LocationEvent(String type, LatLng latLng, LatLngBounds latLngBounds,
-            Number accuracy, Number altitude, Number altitudeAccuracy, Number heading, Number speed,
-            Number timestamp) {
+    /**
+     * Constructs new location event from given parameters.
+     *
+     * @param type the event type that triggered event.
+     * @param latLng detected geographical location of the user
+     * @param latLngBounds geographical boundaries of the area user is located in (with respect to the accuracy of location)
+     * @param accuracy accuracy of location in meters
+     * @param altitude height of the position above the WSG84 ellipsoid in meters.
+     * @param altitudeAccuracy accuracy of altitude in meters
+     * @param heading the direction of travel in degrees counting clockwise from true North
+     * @param speed current velocity in meters per second
+     * @param timestamp the time when position was acquired in seconds elapsed since January 1, 1970
+     */
+    public LocationEvent(MapEventType type, LatLng latLng, LatLngBounds latLngBounds,
+            double accuracy, double altitude, double altitudeAccuracy, double heading, double speed,
+            double timestamp) {
         super(type);
         this.latLng = latLng;
         this.latLngBounds = latLngBounds;
@@ -51,35 +94,80 @@ public final class LocationEvent extends Event {
         this.timestamp = timestamp;
     }
 
+    /**
+     * Returns detected geographical location of the user.
+     *
+     * @return detected geographical location of the user
+     */
     public LatLng getLatLng() {
         return this.latLng;
     }
 
+    /**
+     * Returns geographical boundaries of the area user is located in (with respect to the accuracy of location).
+     *
+     * @return geographical boundaries of the area user is located in (with respect to the accuracy of location)
+     */
     public LatLngBounds getLatLngBounds() {
         return this.latLngBounds;
     }
 
-    public Number getAccuracy() {
+    /**
+     * Returns accuracy of location in meters.
+     * It returns accuracy, if returns {@link Double#NaN}.
+     *
+     * @return accuracy of location in meters
+     */
+    public double getAccuracy() {
         return this.accuracy;
     }
 
-    public Number getAltitude() {
+    /**
+     * Returns height of the position above the WSG84 ellipsoid in meters.
+     * If altitude was not found, it returns {@link Double#NaN}.
+     *
+     * @return height of the position above the WSG84 ellipsoid in meters
+     */
+    public double getAltitude() {
         return this.altitude;
     }
 
-    public Number getAltitudeAccuracy() {
+    /**
+     * Returns accuracy of altitude in meters.
+     * If altitude accuracy was not found, it returns {@link Double#NaN}
+     *
+     * @return accuracy of altitude in meters
+     */
+    public double getAltitudeAccuracy() {
         return this.altitudeAccuracy;
     }
 
-    public Number getHeading() {
+    /**
+     * Returns the direction of travel in degrees counting clockwise from true North.
+     * If heading was not found, it returns {@link Double#NaN}.
+     *
+     * @return the direction of travel in degrees counting clockwise from true North
+     */
+    public double getHeading() {
         return this.heading;
     }
 
-    public Number getSpeed() {
+    /**
+     * Returns current velocity in meters per second.
+     * If velocity was not found, it returns {@link Double#NaN}.
+     *
+     * @return current velocity in meters per second
+     */
+    public double getSpeed() {
         return this.speed;
     }
 
-    public Number getTimestamp() {
+    /**
+     * Returns the time when position was acquired in seconds elapsed since January 1, 1970.
+     *
+     * @return the time when position was acquired in seconds elapsed since January 1, 1970
+     */
+    public double getTimestamp() {
         return this.timestamp;
     }
 

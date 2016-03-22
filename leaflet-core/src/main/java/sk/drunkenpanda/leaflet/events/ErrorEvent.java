@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ferko.
+ * Copyright 2016 Jan Ferko.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,27 +16,52 @@
 
 package sk.drunkenpanda.leaflet.events;
 
+import sk.drunkenpanda.leaflet.components.map.MapEventType;
+
 /**
+ * Event that is triggered when error occurs.
  *
  * @author Jan Ferko
- * @sa.date 2016-03-18T02:19:18+0100
  */
 public final class ErrorEvent extends Event {
 
+    /**
+     * The error message.
+     */
     private final String message;
 
+    /**
+     * The error code (if applicable).
+     */
     private final Integer code;
 
-    public ErrorEvent(String type, String message, Integer code) {
+    /**
+     * Constructs new error event with given parameters.
+     *
+     * @param type event type, that triggered error.
+     * @param message the error message
+     * @param code the error code
+     */
+    public ErrorEvent(MapEventType type, String message, Integer code) {
         super(type);
         this.message = message;
         this.code = code;
     }
 
+    /**
+     * Returns the error message.
+     *
+     * @return the error message
+     */
     public String getMessage() {
         return this.message;
     }
 
+    /**
+     * Returns the error code.
+     *
+     * @return the error code or {@code null} if error does not have error code.
+     */
     public Integer getCode() {
         return this.code;
     }

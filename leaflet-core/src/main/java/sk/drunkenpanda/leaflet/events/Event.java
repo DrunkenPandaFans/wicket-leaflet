@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ferko.
+ * Copyright 2016 Jan Ferko.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,35 @@
 
 package sk.drunkenpanda.leaflet.events;
 
+import sk.drunkenpanda.leaflet.components.map.MapEventType;
+
+/**
+ * Model that describes the base event. All other Leaflet events should inherit from this class.
+ *
+ * @author Jan Ferko
+ */
 public class Event {
 
-    private final String type;
+    /**
+     * The event type.
+     */
+    private final MapEventType type;
 
-    public Event(String type) {
+    /**
+     * Constructs new event for given event type.
+     *
+     * @param type the event type
+     */
+    public Event(MapEventType type) {
         this.type = type;
     }
 
-    public String getType() {
+    /**
+     * Returns type of event.
+     *
+     * @return type of event
+     */
+    public MapEventType getType() {
         return type;
     }
 

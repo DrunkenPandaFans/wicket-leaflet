@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ferko.
+ * Copyright 2016 Jan Ferko.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package sk.drunkenpanda.leaflet.json.model;
 
+import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.MouseEvent;
 import sk.drunkenpanda.leaflet.models.LatLng;
 import sk.drunkenpanda.leaflet.models.Point;
@@ -76,7 +77,8 @@ public final class JsonMouseEvent implements JsonEntity<MouseEvent> {
             containerPointModel = containerPoint.toModel();
         }
 
-        return new MouseEvent(type, latLngModel, layerPointModel, containerPointModel);
+        MapEventType eventType = MapEventType.find(type);
+        return new MouseEvent(eventType, latLngModel, layerPointModel, containerPointModel);
     }
 
 }
