@@ -16,14 +16,14 @@
 
 package sk.drunkenpanda.leaflet;
 
-import sk.drunkenpanda.leaflet.resources.LeafletJavascriptResourceReference;
-import sk.drunkenpanda.leaflet.resources.LeafletStylesheetResourceReference;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.request.resource.UrlResourceReference;
-import org.junit.Assert;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
+import sk.drunkenpanda.leaflet.resources.LeafletJavascriptResourceReference;
+import sk.drunkenpanda.leaflet.resources.LeafletStylesheetResourceReference;
 
 /**
  *
@@ -35,53 +35,53 @@ public class DefaultLeafletSettingsTest extends AbstractLeafletTest {
     @Test
     public void testGetWebJarJavascriptReferenceByDefault() {
         ResourceReference reference = new DefaultLeafletSettings().getJavascriptReference();
-        Assert.assertTrue(reference.getClass().isAssignableFrom(LeafletJavascriptResourceReference.class));
+        assertThat(reference.getClass().isAssignableFrom(LeafletJavascriptResourceReference.class)).isTrue();
     }
-    
+
     @Test
     public void testGetCDNJavascriptReferenceIfCDNRequested() {
         ResourceReference reference = new DefaultLeafletSettings.Builder()
                 .setUseCdn(true).build().getJavascriptReference();
-        Assert.assertTrue(reference.getClass().isAssignableFrom(UrlResourceReference.class));
+        assertThat(reference.getClass().isAssignableFrom(UrlResourceReference.class)).isTrue();
     }
-    
+
     @Test
     public void testGetLocalJavascriptResourceReferenceIfSet() {
         JavaScriptResourceReference expected = new JavaScriptResourceReference(getClass(), "leaflet.js");
         ResourceReference reference = new DefaultLeafletSettings.Builder()
                 .setJavascriptReference(expected)
                 .build().getJavascriptReference();
-        Assert.assertEquals(expected, reference);
+        assertThat(reference).isEqualTo(expected);
     }
-    
+
     @Test
     public void testGetWebJarCSSReferenceByDefault() {
         ResourceReference reference = new DefaultLeafletSettings().getCssReference();
-        Assert.assertTrue(reference.getClass().isAssignableFrom(LeafletStylesheetResourceReference.class));        
+        assertThat(reference.getClass().isAssignableFrom(LeafletStylesheetResourceReference.class)).isTrue();
     }
-    
+
     @Test
     public void testGetCDNStylesheetReferenceIfCDNRequested() {
         ResourceReference reference = new DefaultLeafletSettings.Builder()
                 .setUseCdn(true).build().getCssReference();
-        Assert.assertTrue(reference.getClass().isAssignableFrom(UrlResourceReference.class));
+        assertThat(reference.getClass().isAssignableFrom(UrlResourceReference.class)).isTrue();
     }
-    
+
     @Test
     public void testGetLocalCSSResourceReferenceIfSet() {
         CssResourceReference expected = new CssResourceReference(getClass(), "leaflet.css");
         ResourceReference reference = new DefaultLeafletSettings.Builder().setCssReference(expected)
                 .build().getCssReference();
-        Assert.assertEquals(expected, reference);
+        assertThat(reference).isEqualTo(expected);
     }
-    
+
     @Test
     public void testDoesntUseWebJarsIfCDNIsSet() {
         DefaultLeafletSettings settings = new DefaultLeafletSettings.Builder()
                 .setUseCdn(true).build();
-        Assert.assertFalse(settings.useWebJars());
+        assertThat(settings.useWebJars()).isFalse();
     }
-    
+
     @Test
     public void testDoesntUseWebJarsIfReferencesAreSet() {
         CssResourceReference cssReference = new CssResourceReference(getClass(), "leaflet.css");
@@ -89,12 +89,12 @@ public class DefaultLeafletSettingsTest extends AbstractLeafletTest {
         DefaultLeafletSettings settings = new DefaultLeafletSettings.Builder()
                 .setCssReference(cssReference)
                 .setJavascriptReference(jsReference).build();
-        Assert.assertFalse(settings.useWebJars());
+        assertThat(settings.useWebJars()).isFalse();
     }
-        
+
     @Test
     public void testUsesWebJarsByDefault() {
         DefaultLeafletSettings settings = new DefaultLeafletSettings();
-        Assert.assertTrue(settings.useWebJars());
+        assertThat(settings.useWebJars()).isTrue();
     }
 }
