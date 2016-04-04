@@ -23,7 +23,7 @@ import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
 import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.tester.WicketTester;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 import sk.drunkenpanda.leaflet.AbstractLeafletTest;
 import sk.drunkenpanda.leaflet.components.map.Map;
@@ -46,8 +46,8 @@ public final class LeafletAjaxBehaviorTest extends AbstractLeafletTest {
 
         for (java.util.Map.Entry<String, String> entry : attributes.entrySet()) {
             Object actual = requestAttributes.getExtraParameters().get(entry.getKey());
-            assertNotNull(actual);
-            assertEquals(entry.getValue(), actual);
+            assertThat(actual).isNotNull();
+            assertThat(actual).isEqualTo(entry.getValue());
         }
     }
 
@@ -63,7 +63,7 @@ public final class LeafletAjaxBehaviorTest extends AbstractLeafletTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testAddNullParameters() {
-        TestAjaxBehavior behavior = new TestAjaxBehavior(null);
+        TestAjaxBehavior behavior = new TestAjaxBehavior((java.util.Map<String, String>)null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -77,37 +77,35 @@ public final class LeafletAjaxBehaviorTest extends AbstractLeafletTest {
     public void testGetVariable() {
         final WicketTester tester = getTester();
 
-        TestAjaxBehavior behavior = new TestAjaxBehavior("testA", "A");
+        TestAjaxBehavior behavior = new TestAjaxBehavior("testA");
         Map map = new Map("map");
         map.add(behavior);
 
         tester.startComponentInPage(map);
 
         MockHttpServletRequest request = this.prepareRequest(tester, behavior, "testA", "testValue");
-        tester.setRequest(request);
-        tester.applyRequest();
+        tester.processRequest(request);
 
-        StringValue actual = behavior.tryGetVariable("testA");
-        assertFalse(actual.isEmpty());
-        assertEquals(actual.toString(), "testValue");
+        StringValue actual = behavior.actualVariableValue;
+        assertThat(actual.isEmpty()).isFalse();
+        assertThat(actual.toString()).isEqualTo("testValue");
     }
 
     @Test
     public void testGetMissingVariable() {
         final WicketTester tester = getTester();
 
-        TestAjaxBehavior behavior = new TestAjaxBehavior("testA", "A");
+        TestAjaxBehavior behavior = new TestAjaxBehavior("testB");
         Map map = new Map("map");
         map.add(behavior);
 
         tester.startComponentInPage(map);
 
         MockHttpServletRequest request = prepareRequest(tester, behavior, "testA", "testA");
-        tester.setRequest(request);
-        tester.applyRequest();
+        tester.processRequest(request);
 
-        StringValue missingValue = behavior.getVariableValue("missing");
-        assertTrue(missingValue.isEmpty());
+        StringValue missingValue = behavior.actualVariableValue;
+        assertThat(missingValue.isEmpty()).isTrue();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -120,13 +118,17 @@ public final class LeafletAjaxBehaviorTest extends AbstractLeafletTest {
 
         tester.startComponentInPage(map);
 
-        behavior.tryGetVariable(null);
+        behavior.getVariableValue(null);
     }
 
     private static class TestAjaxBehavior extends LeafletAjaxBehavior {
 
-        public StringValue tryGetVariable(String parameterName) {
-            return this.getVariableValue(parameterName);
+        StringValue actualVariableValue;
+
+        private String expectedVariableName;
+
+        public TestAjaxBehavior(String expectedVariableName) {
+            this.expectedVariableName = expectedVariableName;
         }
 
         public TestAjaxBehavior(String parameterName, String parameterValue) {
@@ -139,6 +141,9 @@ public final class LeafletAjaxBehaviorTest extends AbstractLeafletTest {
 
         @Override
         protected void respond(AjaxRequestTarget target) {
+            if (this.expectedVariableName != null) {
+                this.actualVariableValue = this.getVariableValue(expectedVariableName);
+            }
         }
 
     }

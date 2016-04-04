@@ -22,7 +22,8 @@ import com.google.common.collect.Sets;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
 import org.apache.wicket.util.tester.WicketTester;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import org.junit.Before;
 import org.junit.Test;
 import sk.drunkenpanda.leaflet.AbstractLeafletTest;
@@ -58,6 +59,16 @@ public final class MouseEventBehaviorTest extends AbstractLeafletTest {
         jsonMouseEvent.setType("click");
     }
 
+    private JsonMouseEvent prepareMouseEvent(String type) {
+        JsonMouseEvent newMouseEvent = new JsonMouseEvent();
+        newMouseEvent.setContainerPoint(jsonMouseEvent.getContainerPoint());
+        newMouseEvent.setLatLng(jsonMouseEvent.getLatLng());
+        newMouseEvent.setLayerPoint(jsonMouseEvent.getLayerPoint());
+        newMouseEvent.setType(type);
+
+        return newMouseEvent;
+    }
+
     @Test
     public void testDoesNotAllowUnsupportedEvents() {
         final Set<MapEventType> eventTypes = Sets.newHashSet(MapEventType.values());
@@ -83,14 +94,10 @@ public final class MouseEventBehaviorTest extends AbstractLeafletTest {
         final WicketTester tester = this.getTester();
         Map map = new Map("map");
 
-        ImmutableMap.Builder<MapEventType, MouseEventBehavior> behaviors = ImmutableMap.builder();
+        ImmutableMap.Builder<MapEventType, TestMouseEventBehavior> behaviors = ImmutableMap.builder();
         for (MapEventType eventType : MouseEventBehavior.SUPPORTED_EVENTS) {
-            final MouseEventBehavior behavior = new MouseEventBehavior(eventType) {
-                @Override
-                protected void onEvent(MouseEvent event, AjaxRequestTarget target) {
-                    MouseEventBehaviorTest.this.checkReceivedEvent(jsonMouseEvent, event);
-                }
-            };
+            final JsonMouseEvent expectedEvent = this.prepareMouseEvent(eventType.getJavascriptName());
+            final TestMouseEventBehavior behavior = new TestMouseEventBehavior(eventType, expectedEvent.toModel());
             map.add(behavior);
 
             behaviors.put(eventType, behavior);
@@ -98,32 +105,30 @@ public final class MouseEventBehaviorTest extends AbstractLeafletTest {
 
         tester.startComponentInPage(map);
 
-        for (java.util.Map.Entry<MapEventType, MouseEventBehavior> entry : behaviors.build().entrySet()) {
-            MockHttpServletRequest mockRequest = this.prepareRequest(tester, entry.getValue(), entry.getKey(), jsonMouseEvent);
-            tester.setRequest(mockRequest);
-            tester.applyRequest();
+        for (java.util.Map.Entry<MapEventType, TestMouseEventBehavior> entry : behaviors.build().entrySet()) {
+            JsonMouseEvent expected = this.prepareMouseEvent(entry.getKey().getJavascriptName());
+
+            MockHttpServletRequest request = this.prepareRequest(tester, entry.getValue(), entry.getKey(), expected);
+            tester.processRequest(request);
+
+            assertThat(entry.getValue().actualEvent)
+                    .as("Event [%s] was not triggered.", entry.getKey())
+                    .isEqualToComparingFieldByField(expected.toModel());
         }
     }
 
-    private void checkReceivedEvent(JsonMouseEvent expected, MouseEvent actual) {
-        assertNotNull(actual);
-        if (expected.getContainerPoint() != null) {
-            assertEquals(expected.getContainerPoint().toModel(), actual.getContainerPoint());
-        } else {
-            assertNull(actual.getContainerPoint());
-        }
-        if (expected.getLayerPoint() != null) {
-            assertEquals(expected.getLayerPoint().toModel(), actual.getLayerPoint());
-        } else {
-            assertNull(actual.getLayerPoint());
-        }
-        if (expected.getLatLng() != null) {
-            assertEquals(expected.getLatLng(), actual.getLatLng());
-        } else {
-            assertNull(actual.getLatLng());
+    private class TestMouseEventBehavior extends MouseEventBehavior {
+        private MouseEvent actualEvent;
+
+        public TestMouseEventBehavior(MapEventType eventType, MouseEvent actualEvent) {
+            super(eventType);
+            this.actualEvent = actualEvent;
         }
 
-        assertEquals(expected.getType(), actual.getType());
+        @Override
+        protected void onEvent(MouseEvent actual, AjaxRequestTarget target) {
+            this.actualEvent = actual;
+        }
     }
 
 }

@@ -16,10 +16,14 @@
 
 package sk.drunkenpanda.leaflet;
 
+import java.nio.charset.Charset;
+import java.util.Iterator;
 import org.apache.wicket.Page;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
+import org.apache.wicket.request.Url;
+import org.apache.wicket.util.tester.DummyHomePage;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import sk.drunkenpanda.leaflet.behaviors.LeafletAjaxEventBehavior;
@@ -107,7 +111,7 @@ public abstract class AbstractLeafletTest {
      * @return class of home page
      */
     protected Class<? extends Page> getHomePage() {
-        return Page.class;
+        return DummyHomePage.class;
     }
 
     /**
@@ -153,10 +157,20 @@ public abstract class AbstractLeafletTest {
             String parameterName, String parameterValue) {
         MockHttpServletRequest request = new MockHttpServletRequest(tester.getApplication(), tester.getHttpSession(), tester.getServletContext());
 
-        final String url = behavior.getCallbackUrl().toString();
+        Url url = Url.parse(behavior.getCallbackUrl().toString(), Charset.forName(request.getCharacterEncoding()));
+
+        // make url suitable for wicket tester use. usually this involves stripping any leading ..
+	// segments to make the url absolute
+        for (Iterator<String> segments = url.getSegments().iterator(); segments.hasNext();) {
+            String segment = segments.next();
+            if (segment.equals("..") || segment.equals(".")) {
+                segments.remove();
+            }
+        }
+
         request.addHeader("Wicket-Ajax", "true");
-        request.addHeader("Wicket-Ajax-BaseURL", url);
-        request.setURL(url);
+        request.addHeader("Wicket-Ajax-BaseURL", url.toString());
+        request.setUrl(url);
 
         request.setParameter(parameterName, parameterValue);
 
