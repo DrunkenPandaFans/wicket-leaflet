@@ -32,8 +32,7 @@ public abstract class PlainEventBehavior extends LeafletAjaxEventBehavior<Event,
     };
 
     public PlainEventBehavior(MapEventType eventType) {
-        super(isSupported(eventType), JsonEvent.class);
-        this.addJavascriptValue(eventType.getJavascriptName(), "WicketLeaflet.Event.getEvent(event)");
+        super(isSupported(eventType), JsonEvent.class, "WicketLeaflet.Event.getEvent(event)");
     }
 
     @Override

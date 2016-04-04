@@ -25,8 +25,7 @@ import sk.drunkenpanda.leaflet.json.model.JsonResizeEvent;
 public abstract class ResizeEventBehavior extends LeafletAjaxEventBehavior<ResizeEvent, JsonResizeEvent> {
 
     public ResizeEventBehavior() {
-        super(MapEventType.RESIZE, JsonResizeEvent.class);
-        this.addJavascriptValue(this.getEventType().getJavascriptName(), "WicketLeaflet.ResizeEvent.getResizeEvent(event)");
+        super(MapEventType.RESIZE, JsonResizeEvent.class, "WicketLeaflet.ResizeEvent.getResizeEvent(event)");
     }
 
     @Override

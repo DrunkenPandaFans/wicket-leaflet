@@ -47,8 +47,7 @@ public abstract class MouseEventBehavior extends LeafletAjaxEventBehavior<MouseE
      * @throws IllegalArgumentException if event type is not supported or is {@code null}.
      */
     public MouseEventBehavior(MapEventType eventType) {
-        super(isSupported(eventType), JsonMouseEvent.class);
-        this.addJavascriptValue(eventType.getJavascriptName(), "WicketLeaflet.MouseEvent.getMouseEvent(event)");
+        super(isSupported(eventType), JsonMouseEvent.class, "WicketLeaflet.MouseEvent.getMouseEvent(event)");
     }
 
     @Override

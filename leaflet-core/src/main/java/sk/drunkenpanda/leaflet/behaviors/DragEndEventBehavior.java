@@ -25,8 +25,7 @@ import sk.drunkenpanda.leaflet.json.model.JsonDragEndEvent;
 public abstract class DragEndEventBehavior extends LeafletAjaxEventBehavior<DragEndEvent, JsonDragEndEvent> {
 
     public DragEndEventBehavior() {
-        super(MapEventType.DRAG_END, JsonDragEndEvent.class);
-        this.addJavascriptValue(this.getEventType().getJavascriptName(), "WicketLeaflet.DragEndEvent.getDragEndEvent(event)");
+        super(MapEventType.DRAG_END, JsonDragEndEvent.class, "WicketLeaflet.DragEndEvent.getDragEndEvent(event)");
     }
 
     @Override

@@ -36,9 +36,10 @@ public abstract class LeafletAjaxEventBehavior<E extends Event, J extends JsonEn
 
     private final Class<J> jsonPayloadClass;
 
-    LeafletAjaxEventBehavior(MapEventType eventType, Class<J> jsonPayloadClass) {
+    LeafletAjaxEventBehavior(MapEventType eventType, Class<J> jsonPayloadClass, String javascriptExpression) {
         this.eventType = eventType;
         this.jsonPayloadClass = jsonPayloadClass;
+        this.addJavascriptValue(eventType.getJavascriptName(), javascriptExpression);
     }
 
     @Override

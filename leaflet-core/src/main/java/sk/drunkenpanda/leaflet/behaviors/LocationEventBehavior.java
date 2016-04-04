@@ -31,8 +31,7 @@ import sk.drunkenpanda.leaflet.json.model.JsonLocationEvent;
 public abstract class LocationEventBehavior extends LeafletAjaxEventBehavior<LocationEvent, JsonLocationEvent> {
 
     public LocationEventBehavior() {
-        super(MapEventType.LOCATION_FOUND, JsonLocationEvent.class);
-        this.addJavascriptValue(this.getEventType().getJavascriptName(), "WicketLeaflet.LocationEvent.getLocationEvent(event)");
+        super(MapEventType.LOCATION_FOUND, JsonLocationEvent.class, "WicketLeaflet.LocationEvent.getLocationEvent(event)");
         this.addJavascriptValue(MapEventType.LOCATION_ERROR.getJavascriptName(), "WicketLeaflet.LocationEvent.getLocationError(event)");
     }
 
