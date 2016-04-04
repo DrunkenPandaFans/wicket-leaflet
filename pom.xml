@@ -59,7 +59,6 @@
     <assertj.version>1.7.1</assertj.version>
 
     <jacoco.version>0.7.5.201505241946</jacoco.version>
-    <coveralls.version>3.1.0</coveralls.version>
 
     <maven.java.source>1.6</maven.java.source>
     <maven.java.target>1.6</maven.java.target>
