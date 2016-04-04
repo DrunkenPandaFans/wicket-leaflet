@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ferko.
+ * Copyright 2016 Jan Ferko.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,12 +30,32 @@ import sk.drunkenpanda.leaflet.json.JsonRenderer;
 import sk.drunkenpanda.leaflet.json.JsonRendererFactory;
 import sk.drunkenpanda.leaflet.json.model.JsonEntity;
 
+/**
+ * Abstract base class for processing Leaflet events on server using AJAX.
+ *
+ * @author Jan Ferko
+ * @param <E> the event type, that is processed by this class
+ * @param <J> the json payload created on event firing.
+ */
 public abstract class LeafletAjaxEventBehavior<E extends Event, J extends JsonEntity<E>> extends LeafletAjaxBehavior {
 
+    /**
+     * The event type that this behavior is binded to.
+     */
     private final MapEventType eventType;
 
+    /**
+     * The class of JSON payload that is sent from client when event is fired.
+     */
     private final Class<J> jsonPayloadClass;
 
+    /**
+     * Constructor creates new instance of even behavior for given event type and json payload.
+     *
+     * @param eventType the event type that this behavior is binded to.
+     * @param jsonPayloadClass The class of JSON payload that is sent from client when event is fired.
+     * @param javascriptExpression the javascript expression that is used to retrieve json payload from event.
+     */
     LeafletAjaxEventBehavior(MapEventType eventType, Class<J> jsonPayloadClass, String javascriptExpression) {
         this.eventType = eventType;
         this.jsonPayloadClass = jsonPayloadClass;
@@ -52,6 +72,11 @@ public abstract class LeafletAjaxEventBehavior<E extends Event, J extends JsonEn
         response.render(OnLoadHeaderItem.forScript(script));
     }
 
+    /**
+     * Returns script that initializes event handler on client.
+     *
+     * @return the script that initializes event handler on client
+     */
     protected String getInitializationScript() {
         final String callbackScript = this.getCallbackScript().toString();
         final Map map = (Map) this.getComponent();
@@ -60,6 +85,11 @@ public abstract class LeafletAjaxEventBehavior<E extends Event, J extends JsonEn
                 map.getMapVarName(), this.eventType.getJavascriptName(), callbackScript);
     }
 
+    /**
+     * Returns event type that is handled by this behavior.
+     *
+     * @return the event type that this behavior is binded to on client.
+     */
     protected final MapEventType getEventType() {
         return this.eventType;
     }
@@ -77,8 +107,22 @@ public abstract class LeafletAjaxEventBehavior<E extends Event, J extends JsonEn
         }
     }
 
+    /**
+     * Returns reference to additional javascript resources that are needed to process event on client.
+     * Usually it provides functions to extract json payload from events.
+     *
+     * @return the resource reference to additional javascript
+     */
     protected abstract ResourceReference getJavascriptReference();
 
+    /**
+     * Method that handles event sent from client to server via AJAX.
+     * This is usually implemented in client applications not in direct implementations
+     * in library.
+     *
+     * @param event event sent from client to server
+     * @param target AJAX request target that was sent when event was fired.
+     */
     protected abstract void onEvent(E event, AjaxRequestTarget target);
 
 }
