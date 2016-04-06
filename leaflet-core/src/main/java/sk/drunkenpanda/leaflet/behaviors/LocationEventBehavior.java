@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ferko.
+ * Copyright 2016 Jan Ferko.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.string.StringValue;
+import sk.drunkenpanda.leaflet.components.map.Map;
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.ErrorEvent;
 import sk.drunkenpanda.leaflet.events.LocationEvent;
@@ -28,6 +29,11 @@ import sk.drunkenpanda.leaflet.json.JsonRendererFactory;
 import sk.drunkenpanda.leaflet.json.model.JsonErrorEvent;
 import sk.drunkenpanda.leaflet.json.model.JsonLocationEvent;
 
+/**
+ * Behavior allows server-side processing of location event by using AJAX.
+ *
+ * @author Jan Ferko
+ */
 public abstract class LocationEventBehavior extends LeafletAjaxEventBehavior<LocationEvent, JsonLocationEvent> {
 
     public LocationEventBehavior() {
@@ -38,6 +44,18 @@ public abstract class LocationEventBehavior extends LeafletAjaxEventBehavior<Loc
     @Override
     protected final ResourceReference getJavascriptReference() {
         return new JavaScriptResourceReference(LocationEventBehavior.class, "LocationEvent.js");
+    }
+
+    @Override
+    protected String getInitializationScript() {
+        String script = super.getInitializationScript();
+
+        Map map = (Map) this.getComponent();
+        String callbackScript = this.getCallbackScript().toString();
+        String errorHandler = String.format("%1$s.on('%2$s', function() { %3$s });\n", map.getMapVarName(),
+                MapEventType.LOCATION_ERROR.getJavascriptName(), callbackScript);
+
+        return script + errorHandler;
     }
 
     @Override
@@ -55,6 +73,12 @@ public abstract class LocationEventBehavior extends LeafletAjaxEventBehavior<Loc
         }
     }
 
+    /**
+     * Method handles location error events sent to server via AJAX.
+     *
+     * @param event the event describing location error
+     * @param target AJAX request target sent when error event was fired
+     */
     protected abstract void onError(ErrorEvent event, AjaxRequestTarget target);
 
 }

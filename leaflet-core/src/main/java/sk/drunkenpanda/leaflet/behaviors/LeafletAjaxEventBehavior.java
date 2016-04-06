@@ -81,7 +81,7 @@ public abstract class LeafletAjaxEventBehavior<E extends Event, J extends JsonEn
         final String callbackScript = this.getCallbackScript().toString();
         final Map map = (Map) this.getComponent();
 
-        return String.format("%1$s.on('%2$s', function(event) { %3$s });",
+        return String.format("%1$s.on('%2$s', function(event) { %3$s });\n",
                 map.getMapVarName(), this.eventType.getJavascriptName(), callbackScript);
     }
 
@@ -102,8 +102,8 @@ public abstract class LeafletAjaxEventBehavior<E extends Event, J extends JsonEn
             JsonRenderer jsonRenderer = JsonRendererFactory.getJsonRenderer();
             J jsonEvent = jsonRenderer.fromJson(eventJs.toString(), jsonPayloadClass);
 
-            E dragEndEvent = jsonEvent.toModel();
-            this.onEvent(dragEndEvent, target);
+            E event = jsonEvent.toModel();
+            this.onEvent(event, target);
         }
     }
 

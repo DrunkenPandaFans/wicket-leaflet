@@ -129,15 +129,16 @@ public abstract class AbstractLeafletTest {
      * JSON payload must be serializable with {@link JsonRenderer}.
      *
      * @param <E> event that is triggered by this request
-     * @param <J> type of JSON payload
+     * @param <J> type of expected JSON payload
+     * @param <K> type of JSON payload to be sent in request body
      * @param tester the wicket tester which triggers behavior
      * @param behavior the behavior that should be triggered
      * @param eventType the type of event that should be triggered
      * @param jsonPayload the JSON payload set as value for parameter with event type
      * @return mock HTTP request that triggers Leaflet event behavior
      */
-    protected <E extends Event, J extends JsonEntity<E>> MockHttpServletRequest prepareRequest(WicketTester tester,
-            LeafletAjaxEventBehavior<E, J> behavior, MapEventType eventType, J jsonPayload) {
+    protected <E extends Event, J extends JsonEntity<E>, K> MockHttpServletRequest prepareRequest(WicketTester tester,
+            LeafletAjaxEventBehavior<E, J> behavior, MapEventType eventType, K jsonPayload) {
         JsonRenderer jsonRenderer = JsonRendererFactory.getJsonRenderer();
         String json = jsonRenderer.toJson(jsonPayload);
 

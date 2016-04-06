@@ -18,6 +18,8 @@ package sk.drunkenpanda.leaflet.json.model;
 
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.LocationEvent;
+import sk.drunkenpanda.leaflet.models.LatLng;
+import sk.drunkenpanda.leaflet.models.LatLngBounds;
 
 public final class JsonLocationEvent implements JsonEntity<LocationEvent> {
 
@@ -114,7 +116,9 @@ public final class JsonLocationEvent implements JsonEntity<LocationEvent> {
     @Override
     public LocationEvent toModel() {
         MapEventType eventType = MapEventType.find(type);
-        return new LocationEvent(eventType, latLng.toModel(), latLngBounds.toModel(), accuracy, altitude,
+        LatLng location = latLng == null ? null : latLng.toModel();
+        LatLngBounds boundary = latLngBounds == null ? null : latLngBounds.toModel();
+        return new LocationEvent(eventType, location, boundary, accuracy, altitude,
                 altitudeAccuracy, heading, speed, timestamp);
     }
 
