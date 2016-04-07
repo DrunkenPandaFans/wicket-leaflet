@@ -77,11 +77,7 @@ public final class MouseEventBehaviorTest extends AbstractLeafletTest {
 
         for (MapEventType eventType : unsupportedEventTypes) {
             try {
-                final MouseEventBehavior behavior = new MouseEventBehavior(eventType) {
-                    @Override
-                    protected void onEvent(MouseEvent event, AjaxRequestTarget target) {
-                    }
-                };
+                final MouseEventBehavior behavior = new TestMouseEventBehavior(eventType, null);
                 fail("MouseEventBehavior should throw IllegalArgumentException if unsupported event type is provided.");
             } catch (IllegalArgumentException ex) {
                 // ok
