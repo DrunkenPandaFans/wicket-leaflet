@@ -53,12 +53,12 @@
     <log4j.version>1.2.16</log4j.version>
     <slf4j.version>1.6.4</slf4j.version>
     <servlet.version>2.5</servlet.version>
+    <jackson.version>2.5.4</jackson.version>
     <junit.version>4.11</junit.version>
     <mockito.version>1.9.5</mockito.version>
     <assertj.version>1.7.1</assertj.version>
 
     <jacoco.version>0.7.5.201505241946</jacoco.version>
-    <coveralls.version>3.1.0</coveralls.version>
 
     <maven.java.source>1.6</maven.java.source>
     <maven.java.target>1.6</maven.java.target>
@@ -112,6 +112,17 @@
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
         <version>${log4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
       </dependency>
 
       <dependency>
