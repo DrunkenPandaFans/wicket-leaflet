@@ -39,7 +39,7 @@ public final class JsonLocationEvent implements JsonEntity<LocationEvent> {
 
     private double speed;
 
-    private double timestamp;
+    private long timestamp;
 
     public String getType() {
         return this.type;
@@ -105,11 +105,11 @@ public final class JsonLocationEvent implements JsonEntity<LocationEvent> {
         this.speed = speed;
     }
 
-    public double getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(double timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
