@@ -18,6 +18,6 @@ public final class LeafletJacksonModule extends SimpleModule {
         addSerializer(LatLng.class, new LatLngSerializer());
         addSerializer(LatLngBounds.class, new LatLngBoundsSerializer());
         addSerializer(TileLayer.class, new TileLayerSerializer());
-        addSerializer(TileLayerOptions.class, new TileLayOptionsSerializer());
+        addSerializer(TileLayerOptions.class, new TileLayerOptionsSerializer());
     }
 }

@@ -6,6 +6,11 @@ import java.util.List;
 import sk.drunkenpanda.leaflet.models.ILayer;
 import sk.drunkenpanda.leaflet.models.LatLngBounds;
 
+/**
+ * The map component configuration option.
+ *
+ * @author Jan Ferko
+ */
 public class MapOptions implements Serializable {
 
     private Integer zoom;
@@ -46,6 +51,9 @@ public class MapOptions implements Serializable {
     private Boolean markerZoomAnimation;
 
 
+    /**
+     * Creates default map options.
+     */
     public MapOptions() {
         this.dragging = true;
         this.touchZoom = true;
@@ -77,7 +85,7 @@ public class MapOptions implements Serializable {
     }
 
     /**
-     * Sets new initial map zoom
+     * Sets new initial map zoom.
      * @param zoom initial map zoom
      * @return instance of this map for chaining
      */
@@ -120,15 +128,31 @@ public class MapOptions implements Serializable {
         return this;
     }
 
+    /**
+     * @return layers that will be added to the map initially.
+     */
     public List<ILayer> getLayers() {
         return this.layers;
     }
 
+    /**
+     * Adds new layer to the map.
+     *
+     * @param layer the new layer
+     * @return this instance for chaining
+     */
     public MapOptions addLayer(ILayer layer) {
         this.layers.add(layer);
         return this;
     }
 
+    /**
+     * Sets new layers to the map.
+     * All previously added layers are removed.
+     *
+     * @param layers the list of layers to be added to map
+     * @return this instance for chaining.
+     */
     public MapOptions setLayers(List<ILayer> layers) {
         this.layers.clear();
         this.layers.addAll(layers);

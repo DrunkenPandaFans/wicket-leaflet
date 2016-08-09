@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ferko.
+ * Copyright 2016 Jan Ferko.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,11 @@ import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.ResizeEvent;
 import sk.drunkenpanda.leaflet.json.model.JsonResizeEvent;
 
+/**
+ * Behavior that allows resize events processing on server-side using AJAX calls.
+ *
+ * @author Jan Ferko
+ */
 public abstract class ResizeEventBehavior extends LeafletAjaxEventBehavior<ResizeEvent, JsonResizeEvent> {
 
     public ResizeEventBehavior() {

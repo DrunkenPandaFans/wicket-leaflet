@@ -9,7 +9,7 @@ import sk.drunkenpanda.leaflet.models.TileLayerOptions;
 import java.io.IOException;
 import java.util.Map;
 
-public final class TileLayOptionsSerializer extends JsonSerializer<TileLayerOptions> {
+public final class TileLayerOptionsSerializer extends JsonSerializer<TileLayerOptions> {
     @Override
     public void serialize(TileLayerOptions value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
         gen.writeStartObject();
@@ -20,6 +20,7 @@ public final class TileLayOptionsSerializer extends JsonSerializer<TileLayerOpti
         gen.writeObjectField("maxZoom", value.getMaxZoom());
         gen.writeObjectField("minZoom", value.getMinZoom());
         gen.writeObjectField("opacity", value.getOpacity());
+        //TODO subdomain support
 //        gen.writeObjectField("subdomains", value.getSubdomains());
         gen.writeObjectField("tileSize", value.getTileSize());
         gen.writeObjectField("unloadInvisibleTiles", value.getUnloadInvisibleTiles());

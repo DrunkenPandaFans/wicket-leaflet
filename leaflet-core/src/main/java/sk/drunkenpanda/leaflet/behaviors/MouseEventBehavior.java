@@ -36,7 +36,7 @@ public abstract class MouseEventBehavior extends LeafletAjaxEventBehavior<MouseE
     static final MapEventType[] SUPPORTED_EVENTS = new MapEventType[] {
         MapEventType.CLICK, MapEventType.DOUBLE_CLICK, MapEventType.MOUSEDOWN,
         MapEventType.MOUSEMOVE, MapEventType.MOUSEOUT, MapEventType.MOUSEOVER,
-        MapEventType.MOUSEUP, MapEventType.CONTEXT_MOVE, MapEventType.PRECLICK,
+        MapEventType.MOUSEUP, MapEventType.CONTEXT_MENU, MapEventType.PRECLICK,
     };
 
     /**

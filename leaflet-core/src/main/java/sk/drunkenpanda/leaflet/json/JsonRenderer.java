@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import sk.drunkenpanda.leaflet.json.serializers.LeafletJacksonModule;
 
+/**
+ * Service for serializing/deserializing Leaflet API objects to/from JSON format.
+ */
 public final class JsonRenderer {
 
     private final ObjectMapper jacksonMapper;
