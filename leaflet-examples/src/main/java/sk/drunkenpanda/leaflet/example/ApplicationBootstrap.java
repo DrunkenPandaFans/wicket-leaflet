@@ -15,15 +15,13 @@
  */
 package sk.drunkenpanda.leaflet.example;
 
+import org.apache.catalina.servlets.DefaultServlet;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 
-import javax.servlet.DispatcherType;
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import java.util.EnumSet;
 
 @SpringBootApplication
@@ -35,12 +33,18 @@ public class ApplicationBootstrap implements ServletContextInitializer {
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
+        // register default servlet to serve static resources
+//        final ServletRegistration.Dynamic defaultServletReg = servletContext.addServlet("default", new DefaultServlet());
+//        defaultServletReg.setLoadOnStartup(1);
+//        defaultServletReg.addMapping("/static/*");
+
         final WicketFilter wicketFilter = new WicketFilter(new WicketApplication());
         final FilterRegistration.Dynamic wicketFilterReg = servletContext
                 .addFilter("wicket.wicket-leaflet-examples", wicketFilter);
         wicketFilterReg.setInitParameter("applicationClassName", WicketApplication.class.getCanonicalName());
+        wicketFilterReg.setInitParameter(WicketFilter.FILTER_MAPPING_PARAM, "/*");
 
-        final EnumSet<DispatcherType> dispatchers = EnumSet.allOf(DispatcherType.class);
+        final EnumSet<DispatcherType> dispatchers = EnumSet.noneOf(DispatcherType.class);
         wicketFilterReg.addMappingForUrlPatterns(dispatchers, true, "/*");
     }
 }

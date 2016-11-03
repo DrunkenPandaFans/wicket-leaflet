@@ -81,10 +81,6 @@
             </resource>
             <resource>
                 <filtering>false</filtering>
-                <directory>src/main/webapp</directory>
-            </resource>
-            <resource>
-                <filtering>false</filtering>
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**</include>
@@ -131,7 +127,7 @@
                 <version>1.4.1.RELEASE</version>
                 <configuration>
                     <mainClass>sk.drunkenpanda.leaflet.example.ApplicationBootstrap</mainClass>
-                    <classifier>app</classifier>
+                    <finalName>LeafletExamples</finalName>
                 </configuration>
                 <executions>
                     <execution>

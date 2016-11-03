@@ -25,6 +25,7 @@ public class WicketApplication extends WebApplication {
 
         DefaultLeafletSettings settings = new DefaultLeafletSettings.Builder()
                 .setAutoAppendResources(true)
+                .setUseCdn(true)
                 .build();
         Leaflet.install(this, settings);
     }
