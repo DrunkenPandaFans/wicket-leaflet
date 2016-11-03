@@ -15,42 +15,32 @@
  */
 package sk.drunkenpanda.leaflet.example;
 
+import org.apache.wicket.protocol.http.WicketFilter;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
 
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.webapp.WebAppContext;
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import java.util.EnumSet;
 
-public class ApplicationBootstrap {
+@SpringBootApplication
+public class ApplicationBootstrap implements ServletContextInitializer {
 
     public static void main(String[] args) throws Exception {
-        final String baseDir = "src/main/webapp";
+        SpringApplication.run(ApplicationBootstrap.class, args);
+    }
 
-        String port = System.getenv("PORT");
-        if (port == null || port.isEmpty()) {
-            port = "9000";
-        }
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        final WicketFilter wicketFilter = new WicketFilter(new WicketApplication());
+        final FilterRegistration.Dynamic wicketFilterReg = servletContext
+                .addFilter("wicket.wicket-leaflet-examples", wicketFilter);
+        wicketFilterReg.setInitParameter("applicationClassName", WicketApplication.class.getCanonicalName());
 
-        final Server server = new Server(Integer.valueOf(port));
-
-        WebAppContext context = new WebAppContext();
-        context.setContextPath("/");
-        context.setResourceBase(baseDir);
-        context.setDescriptor(baseDir + "/WEB-INF/web.xml");
-        server.setHandler(context);
-
-        server.start();
-        server.join();
-
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    server.stop();
-                } catch (Exception ex) {
-                    // exception during shutdown
-                    ex.printStackTrace(System.err);
-                }
-            }
-        }));
+        final EnumSet<DispatcherType> dispatchers = EnumSet.allOf(DispatcherType.class);
+        wicketFilterReg.addMappingForUrlPatterns(dispatchers, true, "/*");
     }
 }
