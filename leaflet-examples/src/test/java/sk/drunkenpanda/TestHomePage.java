@@ -1,21 +1,33 @@
 package sk.drunkenpanda;
 
+import javax.inject.Inject;
+
+import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import sk.drunkenpanda.leaflet.example.HomePage;
-import sk.drunkenpanda.leaflet.example.WicketApplication;
+import sk.drunkenpanda.leaflet.example.WicketLeafletExampleBootstrap;
 
 /**
  * Simple test using the WicketTester
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = WicketLeafletExampleBootstrap.class)
 public class TestHomePage {
-    
+
+    @Inject
+    private WebApplication webApplication;
+
     private WicketTester tester;
 
     @Before
     public void setUp() {
-        tester = new WicketTester(new WicketApplication());
+        this.tester = new WicketTester(this.webApplication);
     }
 
     @Test
