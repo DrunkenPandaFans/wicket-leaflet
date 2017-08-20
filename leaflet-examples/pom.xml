@@ -30,10 +30,6 @@
     <packaging>jar</packaging>
     <name>leaflet-examples</name>
 
-    <properties>
-        <spring.boot.version>1.5.6.RELEASE</spring.boot.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.apache.wicket</groupId>
@@ -46,7 +42,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring.boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-webmvc</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>sk.drunkenpanda</groupId>
@@ -61,7 +62,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>${spring.boot.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -116,6 +117,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring.boot.version}</version>
+                <configuration>
+                    <addResources>true</addResources>
+                </configuration>
             </plugin>
         </plugins>
     </build>
