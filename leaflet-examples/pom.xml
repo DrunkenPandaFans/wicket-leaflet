@@ -118,8 +118,18 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring.boot.version}</version>
                 <configuration>
+                    <mainClass>sk.drunkenpanda.leaflet.example.WicketLeafletExampleBootstrap</mainClass>
                     <addResources>true</addResources>
+                    <finalName>LeafletExample</finalName>
+                    <classifier>exec</classifier>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
