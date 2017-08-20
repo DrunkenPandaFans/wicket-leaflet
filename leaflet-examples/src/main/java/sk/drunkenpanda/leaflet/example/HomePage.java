@@ -3,6 +3,8 @@ package sk.drunkenpanda.leaflet.example;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.springframework.beans.factory.annotation.Value;
+
 import sk.drunkenpanda.leaflet.components.map.Map;
 import sk.drunkenpanda.leaflet.components.map.MapOptions;
 import sk.drunkenpanda.leaflet.models.LatLng;
@@ -12,6 +14,12 @@ import sk.drunkenpanda.leaflet.models.TileLayerOptions;
 public class HomePage extends AbstractLeafletExamplePage {
     private static final long serialVersionUID = 1L;
 
+    @Value("${mapbox.access.token}")
+    private String accessToken;
+
+    @Value("${mapbox.map.id}")
+    private String mapId;
+
     public HomePage(final PageParameters parameters) {
         super(parameters);
 
@@ -20,8 +28,8 @@ public class HomePage extends AbstractLeafletExamplePage {
         final TileLayerOptions tilesOptions = new TileLayerOptions()
                 .setAttribution("Map data &copy;...")
                 .setMaxZoom(18)
-                .addExtraParameter("id", "<map_id>")
-                .addExtraParameter("accessToken", "<access_token>");
+                .addExtraParameter("id", mapId)
+                .addExtraParameter("accessToken", this.accessToken);
         final TileLayer tileLayer = new TileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", tilesOptions);
 
         final MapOptions options = new MapOptions()
