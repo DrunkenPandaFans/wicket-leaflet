@@ -25,7 +25,12 @@ import sk.drunkenpanda.leaflet.models.Point;
  *
  * @author Jan Ferko
  */
-public final class MouseEvent extends Event {
+public final class MouseEvent implements Event {
+
+    /**
+     * The event type.
+     */
+    private final MapEventType type;
 
     /**
      * The geographical point where the mouse event occurred.
@@ -51,7 +56,7 @@ public final class MouseEvent extends Event {
      * @param containerPoint pixel coordinates of the point where mouse event occurred relative to map container
      */
     public MouseEvent(MapEventType type, LatLng latLng, Point layerPoint, Point containerPoint) {
-        super(type);
+        this.type = type;
         this.latLng = latLng;
         this.layerPoint = layerPoint;
         this.containerPoint = containerPoint;
@@ -87,4 +92,8 @@ public final class MouseEvent extends Event {
         return this.containerPoint;
     }
 
+    @Override
+    public MapEventType getType() {
+        return this.type;
+    }
 }

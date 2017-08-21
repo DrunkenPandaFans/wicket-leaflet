@@ -24,7 +24,12 @@ import sk.drunkenpanda.leaflet.models.ILayer;
  *
  * @author Jan Ferko
  */
-public final class LayerEvent extends Event {
+public final class LayerEvent implements Event {
+
+    /**
+     * The event type.
+     */
+    private final MapEventType type;
 
     /**
      * The layer that was added or removed.
@@ -38,7 +43,7 @@ public final class LayerEvent extends Event {
      * @param layer layer that was added or removed
      */
     public LayerEvent(MapEventType type, ILayer layer) {
-        super(type);
+        this.type = type;
         this.layer = layer;
     }
 
@@ -51,4 +56,8 @@ public final class LayerEvent extends Event {
         return this.layer;
     }
 
+    @Override
+    public MapEventType getType() {
+        return this.type;
+    }
 }

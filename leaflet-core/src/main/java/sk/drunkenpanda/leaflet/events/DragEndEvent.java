@@ -23,7 +23,12 @@ import sk.drunkenpanda.leaflet.components.map.MapEventType;
  *
  * @author Jan Ferko
  */
-public final class DragEndEvent extends Event {
+public final class DragEndEvent implements Event {
+
+    /**
+     * The event type.
+     */
+    private final MapEventType type;
 
     private final Number distance;
 
@@ -34,7 +39,7 @@ public final class DragEndEvent extends Event {
      * @param distance the distance in pixels the draggable element was moved.
      */
     public DragEndEvent(MapEventType type, Number distance) {
-        super(type);
+        this.type = type;
         this.distance = distance;
     }
 
@@ -47,4 +52,8 @@ public final class DragEndEvent extends Event {
         return this.distance;
     }
 
+    @Override
+    public MapEventType getType() {
+        return this.type;
+    }
 }

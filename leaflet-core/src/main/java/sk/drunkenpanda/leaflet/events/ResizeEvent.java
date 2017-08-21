@@ -24,7 +24,12 @@ import sk.drunkenpanda.leaflet.models.Point;
  *
  * @author Jan Ferko
  */
-public final class ResizeEvent extends Event {
+public final class ResizeEvent implements Event {
+
+    /**
+     * The event type.
+     */
+    private final MapEventType type;
 
     /**
      * The old size before resize event.
@@ -44,7 +49,7 @@ public final class ResizeEvent extends Event {
      * @param newSize the new size after resize event
      */
     public ResizeEvent(MapEventType type, Point oldSize, Point newSize) {
-        super(type);
+        this.type = type;
         this.oldSize = oldSize;
         this.newSize = newSize;
     }
@@ -67,4 +72,8 @@ public final class ResizeEvent extends Event {
         return this.newSize;
     }
 
+    @Override
+    public MapEventType getType() {
+        return this.type;
+    }
 }

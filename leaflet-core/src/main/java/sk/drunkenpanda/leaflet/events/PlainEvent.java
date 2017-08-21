@@ -14,31 +14,25 @@
  * limitations under the License.
  */
 
-package sk.drunkenpanda.leaflet.json.model;
+package sk.drunkenpanda.leaflet.events;
 
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
-import sk.drunkenpanda.leaflet.events.Event;
 
 /**
+ * The simplest kind of event. It does not provide any additional payload.
  *
  * @author Jan Ferko
  */
-public class JsonEvent implements JsonEntity<Event> {
+public final class PlainEvent implements Event {
 
-    private String type;
+    private final MapEventType type;
 
-    public String getType() {
-        return this.type;
-    }
-
-    public void setType(String type) {
+    public PlainEvent(MapEventType type) {
         this.type = type;
     }
 
     @Override
-    public Event toModel() {
-        MapEventType eventType = MapEventType.find(type);
-        return new Event(eventType);
+    public MapEventType getType() {
+        return type;
     }
-
 }

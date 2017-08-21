@@ -24,14 +24,18 @@ import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.tester.WicketTester;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
-import static org.mockito.Mockito.*;
+
 import sk.drunkenpanda.leaflet.AbstractLeafletTest;
 import sk.drunkenpanda.leaflet.components.map.Map;
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.Event;
-import sk.drunkenpanda.leaflet.json.model.JsonEvent;
+import sk.drunkenpanda.leaflet.events.PlainEvent;
+import sk.drunkenpanda.leaflet.json.model.JsonPlainEvent;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
  *
@@ -95,7 +99,7 @@ public final class LeafletAjaxEventBehaviorTest extends AbstractLeafletTest {
         map.add(behavior);
 
         tester.startComponentInPage(map);
-        JsonEvent jsonEvent = new JsonEvent();
+        JsonPlainEvent jsonEvent = new JsonPlainEvent();
         jsonEvent.setType("click");
 
         MockHttpServletRequest request = this.prepareRequest(tester, behavior, MapEventType.CLICK, jsonEvent);
@@ -105,14 +109,14 @@ public final class LeafletAjaxEventBehaviorTest extends AbstractLeafletTest {
         assertThat(behavior.lastEvent).isEqualToComparingFieldByField(jsonEvent.toModel());
     }
 
-    private class TestAjaxEventBehavior extends LeafletAjaxEventBehavior<Event, JsonEvent> {
+    private class TestAjaxEventBehavior extends LeafletAjaxEventBehavior<PlainEvent, JsonPlainEvent> {
 
         boolean wasTriggered = false;
 
         Event lastEvent = null;
 
         public TestAjaxEventBehavior(MapEventType eventType) {
-            super(eventType, JsonEvent.class, "WicketLeaflet.Event.getEvent(event)");
+            super(eventType, JsonPlainEvent.class, "WicketLeaflet.Event.getEvent(event)");
         }
 
         @Override
@@ -121,7 +125,7 @@ public final class LeafletAjaxEventBehaviorTest extends AbstractLeafletTest {
         }
 
         @Override
-        protected void onEvent(Event event, AjaxRequestTarget target) {
+        protected void onEvent(PlainEvent event, AjaxRequestTarget target) {
             this.wasTriggered = true;
             this.lastEvent = event;
         }

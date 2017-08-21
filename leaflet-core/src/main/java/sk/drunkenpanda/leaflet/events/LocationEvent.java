@@ -25,7 +25,12 @@ import sk.drunkenpanda.leaflet.models.LatLngBounds;
  *
  * @author Jan Ferko
  */
-public final class LocationEvent extends Event {
+public final class LocationEvent implements Event {
+
+    /**
+     * The event type.
+     */
+    private final MapEventType type;
 
     /**
      * Detected geographical location of the user.
@@ -83,7 +88,7 @@ public final class LocationEvent extends Event {
     public LocationEvent(MapEventType type, LatLng latLng, LatLngBounds latLngBounds,
             double accuracy, double altitude, double altitudeAccuracy, double heading, double speed,
             double timestamp) {
-        super(type);
+        this.type = type;
         this.latLng = latLng;
         this.latLngBounds = latLngBounds;
         this.accuracy = accuracy;
@@ -171,4 +176,8 @@ public final class LocationEvent extends Event {
         return this.timestamp;
     }
 
+    @Override
+    public MapEventType getType() {
+        return this.type;
+    }
 }

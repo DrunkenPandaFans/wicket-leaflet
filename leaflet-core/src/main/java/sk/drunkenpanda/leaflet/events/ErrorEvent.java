@@ -23,7 +23,12 @@ import sk.drunkenpanda.leaflet.components.map.MapEventType;
  *
  * @author Jan Ferko
  */
-public final class ErrorEvent extends Event {
+public final class ErrorEvent implements Event {
+
+    /**
+     * The event type.
+     */
+    private final MapEventType type;
 
     /**
      * The error message.
@@ -43,9 +48,14 @@ public final class ErrorEvent extends Event {
      * @param code the error code
      */
     public ErrorEvent(MapEventType type, String message, Integer code) {
-        super(type);
+        this.type = type;
         this.message = message;
         this.code = code;
+    }
+
+    @Override
+    public MapEventType getType() {
+        return this.type;
     }
 
     /**
