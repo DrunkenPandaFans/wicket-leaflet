@@ -77,8 +77,13 @@ public final class JsonMouseEvent implements JsonEntity<MouseEvent> {
             containerPointModel = containerPoint.toModel();
         }
 
-        MapEventType eventType = MapEventType.find(type);
-        return new MouseEvent(eventType, latLngModel, layerPointModel, containerPointModel);
+        final MapEventType eventType = MapEventType.find(type);
+        return MouseEvent.builder()
+                .type(eventType)
+                .containerPoint(containerPointModel)
+                .layerPoint(layerPointModel)
+                .latLng(latLngModel)
+                .build();
     }
 
 }

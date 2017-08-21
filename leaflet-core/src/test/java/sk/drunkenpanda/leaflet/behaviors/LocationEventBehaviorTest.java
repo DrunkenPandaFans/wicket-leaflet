@@ -52,7 +52,7 @@ public final class LocationEventBehaviorTest extends AbstractLeafletTest {
         this.locationEvent.setHeading(15.0);
         this.locationEvent.setSpeed(20.0);
         this.locationEvent.setTimestamp(new Date().getTime());
-        this.locationEvent.setType("location");
+        this.locationEvent.setType(MapEventType.LOCATION_FOUND.getJavascriptName());
 
         JsonLatLng latLng = new JsonLatLng();
         latLng.setLatitude(35.67);
@@ -69,10 +69,11 @@ public final class LocationEventBehaviorTest extends AbstractLeafletTest {
         southWest.setLongitude(23.43);
         latLngBounds.setNorthEast(northEast);
         latLngBounds.setSouthWest(southWest);
+        this.locationEvent.setLatLngBounds(latLngBounds);
 
         this.errorEvent = new JsonErrorEvent();
         this.errorEvent.setCode(42);
-        this.errorEvent.setType("error");
+        this.errorEvent.setType(MapEventType.LOCATION_ERROR.getJavascriptName());
         this.errorEvent.setMessage("The Answer to the Ultimate Question of Life, the Universe, and Everything is 42.");
     }
 

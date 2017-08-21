@@ -16,48 +16,46 @@
 
 package sk.drunkenpanda.leaflet.events;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.immutables.value.Value;
+
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
-import sk.drunkenpanda.leaflet.models.ILayer;
 
 /**
- * Event that triggers when layer is added or removed to/from map.
+ * Event that is triggered when error occurs.
  *
  * @author Jan Ferko
  */
-public final class LayerEvent implements Event {
+@EventStyle
+@Value.Immutable(builder = false)
+public abstract class AbstractErrorEvent implements Event {
 
     /**
      * The event type.
      */
-    private final MapEventType type;
-
-    /**
-     * The layer that was added or removed.
-     */
-    private final ILayer layer;
-
-    /**
-     * Constructs new layer event for given parameters.
-     *
-     * @param type the event type
-     * @param layer layer that was added or removed
-     */
-    public LayerEvent(MapEventType type, ILayer layer) {
-        this.type = type;
-        this.layer = layer;
-    }
-
-    /**
-     * Returns layer that was added or removed.
-     *
-     * @return layer that was added or removed
-     */
-    public ILayer getLayer() {
-        return this.layer;
-    }
-
+    @Nonnull
     @Override
-    public MapEventType getType() {
-        return this.type;
-    }
+    @Value.Parameter
+    public abstract MapEventType getType();
+
+    /**
+     * Returns the error message.
+     *
+     * @return the error message
+     */
+    @Nonnull
+    @Value.Parameter
+    public abstract String getMessage();
+
+    /**
+     * Returns the error code.
+     *
+     * @return the error code or {@code null} if error does not have error code.
+     */
+    @Nullable
+    @Value.Parameter
+    public abstract Integer getCode();
+
 }

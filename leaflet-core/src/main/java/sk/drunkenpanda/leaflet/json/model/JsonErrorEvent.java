@@ -53,8 +53,8 @@ public final class JsonErrorEvent implements JsonEntity<ErrorEvent> {
 
     @Override
     public ErrorEvent toModel() {
-        MapEventType eventType = MapEventType.find(type);
-        return new ErrorEvent(eventType, message, code);
+        final MapEventType eventType = MapEventType.find(type);
+        return ErrorEvent.of(eventType, message, code);
     }
 
 }

@@ -16,23 +16,33 @@
 
 package sk.drunkenpanda.leaflet.events;
 
+import javax.annotation.Nonnull;
+
+import org.immutables.value.Value;
+
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
+import sk.drunkenpanda.leaflet.models.ILayer;
 
 /**
- * The simplest kind of event. It does not provide any additional payload.
+ * Event that triggers when layer is added or removed to/from map.
  *
  * @author Jan Ferko
  */
-public final class PlainEvent implements Event {
+@EventStyle
+@Value.Immutable(builder = false)
+public abstract class AbstractLayerEvent implements Event {
 
-    private final MapEventType type;
-
-    public PlainEvent(MapEventType type) {
-        this.type = type;
-    }
+    /**
+     * Returns layer that was added or removed.
+     *
+     * @return layer that was added or removed
+     */
+    @Nonnull
+    @Value.Parameter
+    public abstract ILayer getLayer();
 
     @Override
-    public MapEventType getType() {
-        return type;
-    }
+    @Nonnull
+    @Value.Parameter
+    public abstract MapEventType getType();
 }

@@ -53,8 +53,8 @@ public final class JsonResizeEvent implements JsonEntity<ResizeEvent> {
 
     @Override
     public ResizeEvent toModel() {
-        MapEventType eventType = MapEventType.find(type);
-        return new ResizeEvent(eventType, oldSize.toModel(), newSize.toModel());
+        final MapEventType eventType = MapEventType.find(type);
+        return ResizeEvent.of(eventType, oldSize.toModel(), newSize.toModel());
     }
 
 }

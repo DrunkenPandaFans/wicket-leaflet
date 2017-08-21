@@ -115,11 +115,20 @@ public final class JsonLocationEvent implements JsonEntity<LocationEvent> {
 
     @Override
     public LocationEvent toModel() {
-        MapEventType eventType = MapEventType.find(type);
-        LatLng location = latLng == null ? null : latLng.toModel();
-        LatLngBounds boundary = latLngBounds == null ? null : latLngBounds.toModel();
-        return new LocationEvent(eventType, location, boundary, accuracy, altitude,
-                altitudeAccuracy, heading, speed, timestamp);
+        final MapEventType eventType = MapEventType.find(type);
+        final LatLng location = latLng == null ? null : latLng.toModel();
+        final LatLngBounds boundary = latLngBounds == null ? null : latLngBounds.toModel();
+        return LocationEvent.builder()
+            .type(eventType)
+            .latLng(location)
+            .latLngBounds(boundary)
+            .accuracy(accuracy)
+            .altitude(altitude)
+            .altitudeAccuracy(altitudeAccuracy)
+            .heading(heading)
+            .speed(speed)
+            .timestamp(timestamp)
+            .build();
     }
 
 }

@@ -14,32 +14,21 @@
  * limitations under the License.
  */
 
-package sk.drunkenpanda.leaflet.json.model;
+package sk.drunkenpanda.leaflet.events;
+
+import org.immutables.value.Value;
 
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
-import sk.drunkenpanda.leaflet.events.Event;
-import sk.drunkenpanda.leaflet.events.PlainEvent;
 
 /**
+ * The simplest kind of event. It does not provide any additional payload.
  *
  * @author Jan Ferko
  */
-public class JsonPlainEvent implements JsonEntity<PlainEvent> {
+@EventStyle
+@Value.Immutable(builder = false)
+public abstract class AbstractPlainEvent implements Event {
 
-    private String type;
-
-    public String getType() {
-        return this.type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @Override
-    public PlainEvent toModel() {
-        final MapEventType eventType = MapEventType.find(type);
-        return PlainEvent.of(eventType);
-    }
-
+    @Value.Parameter
+    public abstract MapEventType getType();
 }

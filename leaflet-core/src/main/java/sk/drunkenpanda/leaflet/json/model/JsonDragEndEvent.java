@@ -43,8 +43,8 @@ public final class JsonDragEndEvent implements JsonEntity<DragEndEvent> {
 
     @Override
     public DragEndEvent toModel() {
-        MapEventType eventType = MapEventType.find(type);
-        return new DragEndEvent(eventType, distance);
+        final MapEventType eventType = MapEventType.find(type);
+        return DragEndEvent.of(eventType, distance);
     }
 
 }

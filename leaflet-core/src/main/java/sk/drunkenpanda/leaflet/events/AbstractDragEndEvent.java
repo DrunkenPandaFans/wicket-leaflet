@@ -16,6 +16,10 @@
 
 package sk.drunkenpanda.leaflet.events;
 
+import javax.annotation.Nonnull;
+
+import org.immutables.value.Value;
+
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 
 /**
@@ -23,37 +27,20 @@ import sk.drunkenpanda.leaflet.components.map.MapEventType;
  *
  * @author Jan Ferko
  */
-public final class DragEndEvent implements Event {
+@EventStyle
+@Value.Immutable(builder = false)
+public abstract class AbstractDragEndEvent implements Event {
 
-    /**
-     * The event type.
-     */
-    private final MapEventType type;
-
-    private final Number distance;
-
-    /**
-     * Constructs new drag end event for given distance.
-     *
-     * @param type the event type.
-     * @param distance the distance in pixels the draggable element was moved.
-     */
-    public DragEndEvent(MapEventType type, Number distance) {
-        this.type = type;
-        this.distance = distance;
-    }
+    @Override
+    @Nonnull
+    @Value.Parameter
+    public abstract MapEventType getType();
 
     /**
      * Returns the distance in pixels the draggable element was moved.
      *
      * @return the distance in pixels the draggable element was moved
      */
-    public Number getDistance() {
-        return this.distance;
-    }
-
-    @Override
-    public MapEventType getType() {
-        return this.type;
-    }
+    @Value.Parameter
+    public abstract Number getDistance();
 }
