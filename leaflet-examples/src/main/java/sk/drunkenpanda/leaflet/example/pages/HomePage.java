@@ -1,12 +1,14 @@
-package sk.drunkenpanda.leaflet.example;
+package sk.drunkenpanda.leaflet.example.pages;
+
+import javax.inject.Inject;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.springframework.beans.factory.annotation.Value;
 
 import sk.drunkenpanda.leaflet.components.map.Map;
 import sk.drunkenpanda.leaflet.components.map.MapOptions;
+import sk.drunkenpanda.leaflet.example.config.MapboxConfiguration;
 import sk.drunkenpanda.leaflet.models.LatLng;
 import sk.drunkenpanda.leaflet.models.TileLayer;
 import sk.drunkenpanda.leaflet.models.TileLayerOptions;
@@ -14,11 +16,8 @@ import sk.drunkenpanda.leaflet.models.TileLayerOptions;
 public class HomePage extends AbstractLeafletExamplePage {
     private static final long serialVersionUID = 1L;
 
-    @Value("${mapbox.access.token}")
-    private String accessToken;
-
-    @Value("${mapbox.map.id}")
-    private String mapId;
+    @Inject
+    private MapboxConfiguration mapboxConfiguration;
 
     public HomePage(final PageParameters parameters) {
         super(parameters);
@@ -28,9 +27,9 @@ public class HomePage extends AbstractLeafletExamplePage {
         final TileLayerOptions tilesOptions = new TileLayerOptions()
                 .setAttribution("Map data &copy;...")
                 .setMaxZoom(18)
-                .addExtraParameter("id", mapId)
-                .addExtraParameter("accessToken", this.accessToken);
-        final TileLayer tileLayer = new TileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", tilesOptions);
+                .addExtraParameter("id", mapboxConfiguration.getMapId())
+                .addExtraParameter("accessToken", mapboxConfiguration.getAccessToken());
+        final TileLayer tileLayer = new TileLayer(mapboxConfiguration.getUrlTemplate(), tilesOptions);
 
         final MapOptions options = new MapOptions()
                 .setZoom(13)

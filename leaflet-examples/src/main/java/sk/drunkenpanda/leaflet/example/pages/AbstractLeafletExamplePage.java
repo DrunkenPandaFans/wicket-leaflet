@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package sk.drunkenpanda.leaflet.example;
+package sk.drunkenpanda.leaflet.example.pages;
 
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+
+import sk.drunkenpanda.leaflet.example.StaticResourceReference;
 
 public abstract class AbstractLeafletExamplePage extends WebPage {
 

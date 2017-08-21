@@ -1,4 +1,4 @@
-package sk.drunkenpanda;
+package sk.drunkenpanda.leaflet.example.pages;
 
 import javax.inject.Inject;
 
@@ -8,15 +8,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import sk.drunkenpanda.leaflet.example.HomePage;
 import sk.drunkenpanda.leaflet.example.WicketLeafletExampleBootstrap;
 
 /**
  * Simple test using the WicketTester
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource(locations="classpath:application-test.properties")
 @ContextConfiguration(classes = WicketLeafletExampleBootstrap.class)
 public class TestHomePage {
 
