@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 
 import sk.drunkenpanda.leaflet.DefaultLeafletSettings;
 import sk.drunkenpanda.leaflet.Leaflet;
+import sk.drunkenpanda.leaflet.example.pages.HomePage;
 
 /**
  * Application object for examples web application.
