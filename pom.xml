@@ -47,8 +47,9 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <guava.version>23.0-android</guava.version>
     <wicket.version>6.18.0</wicket.version>
-    <webjars.version>0.4.7</webjars.version>
+    <webjars.version>0.4.12</webjars.version>
     <leaflet.version>0.7.3</leaflet.version>
     <log4j.version>1.2.16</log4j.version>
     <slf4j.version>1.6.4</slf4j.version>
@@ -102,6 +103,12 @@
         <groupId>org.webjars</groupId>
         <artifactId>leaflet</artifactId>
         <version>${leaflet.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${guava.version}</version>
       </dependency>
 
       <dependency>
