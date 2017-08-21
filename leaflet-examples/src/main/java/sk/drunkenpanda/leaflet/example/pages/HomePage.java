@@ -22,14 +22,15 @@ public class HomePage extends AbstractLeafletExamplePage {
     public HomePage(final PageParameters parameters) {
         super(parameters);
 
-        final IModel<LatLng> center = new Model<LatLng>(new LatLng(51.505, -0.09));
+        final IModel<LatLng> center = new Model<LatLng>(LatLng.of(51.505, -0.09));
 
-        final TileLayerOptions tilesOptions = new TileLayerOptions()
-                .setAttribution("Map data &copy;...")
-                .setMaxZoom(18)
-                .addExtraParameter("id", mapboxConfiguration.getMapId())
-                .addExtraParameter("accessToken", mapboxConfiguration.getAccessToken());
-        final TileLayer tileLayer = new TileLayer(mapboxConfiguration.getUrlTemplate(), tilesOptions);
+        final TileLayerOptions tilesOptions = TileLayerOptions.builder()
+                .attribution("Map data &copy;...")
+                .maxZoom(18)
+                .putExtraParameters("id", mapboxConfiguration.getMapId())
+                .putExtraParameters("accessToken", mapboxConfiguration.getAccessToken())
+                .build();
+        final TileLayer tileLayer = TileLayer.of(mapboxConfiguration.getUrlTemplate(), tilesOptions);
 
         final MapOptions options = new MapOptions()
                 .setZoom(13)
