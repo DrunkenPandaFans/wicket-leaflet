@@ -42,7 +42,7 @@ public final class JsonLatLng implements JsonEntity<LatLng> {
 
     @Override
     public LatLng toModel() {
-        return new LatLng(latitude, longitude);
+        return LatLng.of(latitude, longitude);
     }
 
 }

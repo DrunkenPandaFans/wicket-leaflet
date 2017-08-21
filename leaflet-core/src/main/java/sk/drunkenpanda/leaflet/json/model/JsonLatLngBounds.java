@@ -42,6 +42,6 @@ public final class JsonLatLngBounds implements JsonEntity<LatLngBounds> {
 
     @Override
     public LatLngBounds toModel() {
-        return new LatLngBounds(northEast.toModel(), southWest.toModel());
+        return LatLngBounds.of(northEast.toModel(), southWest.toModel());
     }
 }

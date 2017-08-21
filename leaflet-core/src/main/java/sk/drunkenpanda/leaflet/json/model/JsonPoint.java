@@ -41,7 +41,7 @@ public final class JsonPoint implements JsonEntity<Point>{
 
     @Override
     public Point toModel() {
-        return new Point(x, y);
+        return Point.of(x, y);
     }
 
 }
