@@ -22,6 +22,8 @@ import javax.annotation.Nonnull;
 
 import org.immutables.value.Value;
 
+import sk.drunkenpanda.leaflet.json.ProperJson;
+
 /**
  * Represents a point with x and y coordinates in pixels.
  *
@@ -29,6 +31,7 @@ import org.immutables.value.Value;
  */
 @ModelStyle
 @Value.Immutable(builder = false)
+@ProperJson
 public abstract class AbstractPoint implements Serializable {
 
     /**

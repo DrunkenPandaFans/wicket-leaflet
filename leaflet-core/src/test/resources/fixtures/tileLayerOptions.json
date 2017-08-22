@@ -1,0 +1,18 @@
+{
+  "minZoom" : 0,
+  "maxZoom" : 18,
+  "tileSize" : 256,
+  "subdomains" : [ "a", "b", "c" ],
+  "attribution" : "Map data &copy;",
+  "zoomOffset" : 0,
+  "opacity" : 1.0,
+  "id" : "<map_id>",
+  "accessToken" : "<access_token>",
+  "isTms" : false,
+  "isContinuousWorld" : false,
+  "isNoWrap" : false,
+  "isZoomReverse" : false,
+  "isDetectRetina" : false,
+  "isReuseTiles" : false,
+  "bounds": [[50.0, 30.0],[-50.0, -30.0]]
+}

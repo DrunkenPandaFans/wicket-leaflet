@@ -23,12 +23,20 @@ import javax.annotation.Nonnull;
 import org.apache.wicket.util.lang.Args;
 import org.immutables.value.Value;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import sk.drunkenpanda.leaflet.json.ProperJson;
+
 /**
  * Represents rectangular geographical area on map.
  * @author Jan Ferko
  */
 @ModelStyle
 @Value.Immutable(builder = false)
+@ProperJson
+@JsonFormat(shape = JsonFormat.Shape.ARRAY)
 public abstract class AbstractLatLngBounds implements Serializable {
 
     @Value.Check
@@ -42,6 +50,7 @@ public abstract class AbstractLatLngBounds implements Serializable {
      */
     @Nonnull
     @Value.Parameter
+    @JsonProperty()
     public abstract LatLng getNorthEast();
 
     /**
@@ -49,11 +58,13 @@ public abstract class AbstractLatLngBounds implements Serializable {
      */
     @Nonnull
     @Value.Parameter
+    @JsonProperty()
     public abstract LatLng getSouthWest();
 
     /**
      * @return the north latitude of the bounds
      */
+    @JsonIgnore
     public double getNorth() {
         return getNorthEast().getLatitude();
     }
@@ -61,6 +72,7 @@ public abstract class AbstractLatLngBounds implements Serializable {
     /**
      * @return the east longitude of the bounds
      */
+    @JsonIgnore
     public double getEast() {
         return getNorthEast().getLongitude();
     }
@@ -68,6 +80,7 @@ public abstract class AbstractLatLngBounds implements Serializable {
     /**
      * @return the south latitude of the bounds
      */
+    @JsonIgnore
     public double getSouth() {
         return getSouthWest().getLatitude();
     }
@@ -75,6 +88,7 @@ public abstract class AbstractLatLngBounds implements Serializable {
     /**
      * @return the west longitude of the bounds
      */
+    @JsonIgnore
     public double getWest() {
         return getSouthWest().getLongitude();
     }
@@ -83,6 +97,7 @@ public abstract class AbstractLatLngBounds implements Serializable {
      * @return the center point of the bounds
      */
     @Nonnull
+    @JsonIgnore
     public LatLng getCenter() {
         final double centerLat = (getNorth() + getSouth()) / 2;
         final double centerLong = (getEast() + getWest()) / 2;

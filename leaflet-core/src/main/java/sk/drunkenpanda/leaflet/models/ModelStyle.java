@@ -7,6 +7,11 @@ import java.lang.annotation.Target;
 
 import org.immutables.value.Value;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
@@ -18,8 +23,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @Retention(RetentionPolicy.CLASS)
 @Value.Style(
         typeAbstract = "Abstract*",
-        typeImmutable = "*"
+        typeImmutable = "*",
+        additionalJsonAnnotations = {JsonFormat.class}
 )
-@JsonSerialize
 @interface ModelStyle {
 }

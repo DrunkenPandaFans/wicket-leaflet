@@ -23,6 +23,11 @@ import javax.annotation.Nonnull;
 import org.apache.wicket.util.lang.Args;
 import org.immutables.value.Value;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import sk.drunkenpanda.leaflet.json.ProperJson;
+
 /**
  * Models represents point on map with certain latitude and longitude.
  *
@@ -30,6 +35,8 @@ import org.immutables.value.Value;
  */
 @ModelStyle
 @Value.Immutable(builder = false)
+@ProperJson
+@JsonFormat(shape = JsonFormat.Shape.ARRAY)
 public abstract class AbstractLatLng implements Serializable {
 
     @Value.Check
@@ -43,6 +50,7 @@ public abstract class AbstractLatLng implements Serializable {
      */
     @Nonnull
     @Value.Parameter
+    @JsonProperty()
     public abstract double getLatitude();
 
     /**
@@ -50,5 +58,6 @@ public abstract class AbstractLatLng implements Serializable {
      */
     @Nonnull
     @Value.Parameter
+    @JsonProperty()
     public abstract double getLongitude();
 }

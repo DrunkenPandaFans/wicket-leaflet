@@ -16,6 +16,7 @@ public final class JsonRenderer {
     private ObjectMapper createObjectMapper() {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new GuavaModule());
+        mapper.registerModule(new LeafletJacksonModule());
 
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         mapper.disable(SerializationFeature.WRITE_NULL_MAP_VALUES);

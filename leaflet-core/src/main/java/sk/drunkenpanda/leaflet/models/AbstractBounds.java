@@ -23,12 +23,15 @@ import javax.annotation.Nonnull;
 import org.apache.wicket.util.lang.Args;
 import org.immutables.value.Value;
 
+import sk.drunkenpanda.leaflet.json.ProperJson;
+
 /**
  * Represents a rectangular area in pixels.
  *
  * @author Jan Ferko
  */
 @ModelStyle
+@ProperJson
 @Value.Immutable(builder = false)
 public abstract class AbstractBounds implements Serializable {
 

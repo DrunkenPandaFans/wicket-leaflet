@@ -1,7 +1,6 @@
 package sk.drunkenpanda.leaflet.models;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,9 +9,13 @@ import javax.annotation.Nullable;
 
 import org.immutables.value.Value;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.google.common.collect.Lists;
 
+import sk.drunkenpanda.leaflet.json.ProperJson;
+
 @ModelStyle
+@ProperJson
 @Value.Immutable
 public abstract class AbstractTileLayerOptions implements Serializable {
 
@@ -98,8 +101,6 @@ public abstract class AbstractTileLayerOptions implements Serializable {
     @Nullable
     public abstract LatLngBounds getBounds();
 
-    @Value.Default
-    public Map<String, String> getExtraParameters() {
-        return new HashMap<>();
-    }
+    @JsonAnyGetter
+    public abstract Map<String, String> getExtraParameters();
 }
