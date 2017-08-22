@@ -109,14 +109,14 @@ public final class LeafletAjaxEventBehaviorTest extends AbstractLeafletTest {
         assertThat(behavior.lastEvent).isEqualToComparingFieldByField(jsonEvent.toModel());
     }
 
-    private class TestAjaxEventBehavior extends LeafletAjaxEventBehavior<PlainEvent, JsonPlainEvent> {
+    private class TestAjaxEventBehavior extends LeafletAjaxEventBehavior<PlainEvent> {
 
         boolean wasTriggered = false;
 
         Event lastEvent = null;
 
         public TestAjaxEventBehavior(MapEventType eventType) {
-            super(eventType, JsonPlainEvent.class, "WicketLeaflet.Event.getEvent(event)");
+            super(eventType, PlainEvent.class, "WicketLeaflet.Event.getEvent(event)");
         }
 
         @Override

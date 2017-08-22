@@ -20,24 +20,23 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.string.StringValue;
+
 import sk.drunkenpanda.leaflet.components.map.Map;
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.ErrorEvent;
 import sk.drunkenpanda.leaflet.events.LocationEvent;
 import sk.drunkenpanda.leaflet.json.JsonRenderer;
 import sk.drunkenpanda.leaflet.json.JsonRendererFactory;
-import sk.drunkenpanda.leaflet.json.model.JsonErrorEvent;
-import sk.drunkenpanda.leaflet.json.model.JsonLocationEvent;
 
 /**
  * Behavior allows server-side processing of location event by using AJAX.
  *
  * @author Jan Ferko
  */
-public abstract class LocationEventBehavior extends LeafletAjaxEventBehavior<LocationEvent, JsonLocationEvent> {
+public abstract class LocationEventBehavior extends LeafletAjaxEventBehavior<LocationEvent> {
 
     public LocationEventBehavior() {
-        super(MapEventType.LOCATION_FOUND, JsonLocationEvent.class, "WicketLeaflet.LocationEvent.getLocationEvent(event)");
+        super(MapEventType.LOCATION_FOUND, LocationEvent.class, "WicketLeaflet.LocationEvent.getLocationEvent(event)");
         this.addJavascriptValue(MapEventType.LOCATION_ERROR.getJavascriptName(), "WicketLeaflet.LocationEvent.getLocationError(event)");
     }
 
@@ -48,11 +47,11 @@ public abstract class LocationEventBehavior extends LeafletAjaxEventBehavior<Loc
 
     @Override
     protected String getInitializationScript() {
-        String script = super.getInitializationScript();
+        final String script = super.getInitializationScript();
 
-        Map map = (Map) this.getComponent();
-        String callbackScript = this.getCallbackScript().toString();
-        String errorHandler = String.format("%1$s.on('%2$s', function() { %3$s });\n", map.getMapVarName(),
+        final Map map = (Map) this.getComponent();
+        final String callbackScript = this.getCallbackScript().toString();
+        final String errorHandler = String.format("%1$s.on('%2$s', function() { %3$s });\n", map.getMapVarName(),
                 MapEventType.LOCATION_ERROR.getJavascriptName(), callbackScript);
 
         return script + errorHandler;
@@ -60,15 +59,13 @@ public abstract class LocationEventBehavior extends LeafletAjaxEventBehavior<Loc
 
     @Override
     protected void respond(AjaxRequestTarget target) {
-        StringValue locationEventJs = this.getVariableValue(this.getEventType().getJavascriptName());
-        StringValue errorEventJs = this.getVariableValue(MapEventType.LOCATION_ERROR.getJavascriptName());
+        final StringValue locationEventJs = this.getVariableValue(this.getEventType().getJavascriptName());
+        final StringValue errorEventJs = this.getVariableValue(MapEventType.LOCATION_ERROR.getJavascriptName());
         if (!locationEventJs.isEmpty()) {
             super.respond(target);
         } else if (!errorEventJs.isEmpty()) {
-            JsonRenderer jsonRenderer = JsonRendererFactory.getJsonRenderer();
-            JsonErrorEvent jsonEvent = jsonRenderer.fromJson(errorEventJs.toString(), JsonErrorEvent.class);
-
-            ErrorEvent errorEvent = jsonEvent.toModel();
+            final JsonRenderer jsonRenderer = JsonRendererFactory.getJsonRenderer();
+            final ErrorEvent errorEvent = jsonRenderer.fromJson(errorEventJs.toString(), ErrorEvent.class);
             this.onError(errorEvent, target);
         }
     }

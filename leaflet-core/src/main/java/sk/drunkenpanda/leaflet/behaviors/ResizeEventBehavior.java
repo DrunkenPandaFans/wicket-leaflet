@@ -18,14 +18,14 @@ package sk.drunkenpanda.leaflet.behaviors;
 
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.ResizeEvent;
-import sk.drunkenpanda.leaflet.json.model.JsonResizeEvent;
 
-public abstract class ResizeEventBehavior extends LeafletAjaxEventBehavior<ResizeEvent, JsonResizeEvent> {
+public abstract class ResizeEventBehavior extends LeafletAjaxEventBehavior<ResizeEvent> {
 
     public ResizeEventBehavior() {
-        super(MapEventType.RESIZE, JsonResizeEvent.class, "WicketLeaflet.ResizeEvent.getResizeEvent(event)");
+        super(MapEventType.RESIZE, ResizeEvent.class, "WicketLeaflet.ResizeEvent.getResizeEvent(event)");
     }
 
     @Override

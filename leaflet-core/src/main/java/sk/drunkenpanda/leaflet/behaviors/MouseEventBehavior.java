@@ -21,14 +21,13 @@ import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.lang.Args;
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.MouseEvent;
-import sk.drunkenpanda.leaflet.json.model.JsonMouseEvent;
 
 /**
  * Behavior that allows mouse events processing on server-side using AJAX calls.
  *
  * @author Jan Ferko
  */
-public abstract class MouseEventBehavior extends LeafletAjaxEventBehavior<MouseEvent, JsonMouseEvent> {
+public abstract class MouseEventBehavior extends LeafletAjaxEventBehavior<MouseEvent> {
 
     /**
      * All event types supported by this behavior.
@@ -47,7 +46,7 @@ public abstract class MouseEventBehavior extends LeafletAjaxEventBehavior<MouseE
      * @throws IllegalArgumentException if event type is not supported or is {@code null}.
      */
     public MouseEventBehavior(MapEventType eventType) {
-        super(isSupported(eventType), JsonMouseEvent.class, "WicketLeaflet.MouseEvent.getMouseEvent(event)");
+        super(isSupported(eventType), MouseEvent.class, "WicketLeaflet.MouseEvent.getMouseEvent(event)");
     }
 
     @Override

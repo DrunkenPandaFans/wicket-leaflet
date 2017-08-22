@@ -23,21 +23,20 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnLoadHeaderItem;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.string.StringValue;
+
 import sk.drunkenpanda.leaflet.components.map.Map;
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.Event;
 import sk.drunkenpanda.leaflet.json.JsonRenderer;
 import sk.drunkenpanda.leaflet.json.JsonRendererFactory;
-import sk.drunkenpanda.leaflet.json.model.JsonEntity;
 
 /**
  * Abstract base class for processing Leaflet events on server using AJAX.
  *
  * @author Jan Ferko
- * @param <E> the event type, that is processed by this class
- * @param <J> the json payload created on event firing.
+ * @param <E> the event type processed by this class.
  */
-public abstract class LeafletAjaxEventBehavior<E extends Event, J extends JsonEntity<E>> extends LeafletAjaxBehavior {
+public abstract class LeafletAjaxEventBehavior<E extends Event> extends LeafletAjaxBehavior {
 
     /**
      * The event type that this behavior is binded to.
@@ -47,7 +46,7 @@ public abstract class LeafletAjaxEventBehavior<E extends Event, J extends JsonEn
     /**
      * The class of JSON payload that is sent from client when event is fired.
      */
-    private final Class<J> jsonPayloadClass;
+    private final Class<E> jsonPayloadClass;
 
     /**
      * Constructor creates new instance of even behavior for given event type and json payload.
@@ -56,7 +55,7 @@ public abstract class LeafletAjaxEventBehavior<E extends Event, J extends JsonEn
      * @param jsonPayloadClass The class of JSON payload that is sent from client when event is fired.
      * @param javascriptExpression the javascript expression that is used to retrieve json payload from event.
      */
-    LeafletAjaxEventBehavior(MapEventType eventType, Class<J> jsonPayloadClass, String javascriptExpression) {
+    LeafletAjaxEventBehavior(MapEventType eventType, Class<E> jsonPayloadClass, String javascriptExpression) {
         this.eventType = eventType;
         this.jsonPayloadClass = jsonPayloadClass;
         this.addJavascriptValue(eventType.getJavascriptName(), javascriptExpression);
@@ -96,13 +95,11 @@ public abstract class LeafletAjaxEventBehavior<E extends Event, J extends JsonEn
 
     @Override
     protected void respond(AjaxRequestTarget target) {
-        StringValue eventJs = this.getVariableValue(this.eventType.getJavascriptName());
+        final StringValue eventJs = this.getVariableValue(this.eventType.getJavascriptName());
 
         if (!eventJs.isEmpty()) {
-            JsonRenderer jsonRenderer = JsonRendererFactory.getJsonRenderer();
-            J jsonEvent = jsonRenderer.fromJson(eventJs.toString(), jsonPayloadClass);
-
-            E event = jsonEvent.toModel();
+            final JsonRenderer jsonRenderer = JsonRendererFactory.getJsonRenderer();
+            final E event = jsonRenderer.fromJson(eventJs.toString(), jsonPayloadClass);
             this.onEvent(event, target);
         }
     }

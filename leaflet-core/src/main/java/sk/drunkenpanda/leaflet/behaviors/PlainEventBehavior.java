@@ -21,9 +21,8 @@ import org.apache.wicket.request.resource.ResourceReference;
 
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.PlainEvent;
-import sk.drunkenpanda.leaflet.json.model.JsonPlainEvent;
 
-public abstract class PlainEventBehavior extends LeafletAjaxEventBehavior<PlainEvent, JsonPlainEvent> {
+public abstract class PlainEventBehavior extends LeafletAjaxEventBehavior<PlainEvent> {
 
     private static final MapEventType[] SUPPORTED_TYPES = new MapEventType[] {
         MapEventType.FOCUS, MapEventType.BLUR, MapEventType.LOAD, MapEventType.UNLOAD,
@@ -33,7 +32,7 @@ public abstract class PlainEventBehavior extends LeafletAjaxEventBehavior<PlainE
     };
 
     public PlainEventBehavior(MapEventType eventType) {
-        super(isSupported(eventType), JsonPlainEvent.class, "WicketLeaflet.Event.getEvent(event)");
+        super(isSupported(eventType), PlainEvent.class, "WicketLeaflet.Event.getEvent(event)");
     }
 
     @Override
