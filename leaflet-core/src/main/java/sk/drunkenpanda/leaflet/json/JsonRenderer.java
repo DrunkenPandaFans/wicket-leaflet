@@ -3,7 +3,7 @@ package sk.drunkenpanda.leaflet.json;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import sk.drunkenpanda.leaflet.json.serializers.LeafletJacksonModule;
+import com.fasterxml.jackson.datatype.guava.GuavaModule;
 
 public final class JsonRenderer {
 
@@ -14,8 +14,8 @@ public final class JsonRenderer {
     }
 
     private ObjectMapper createObjectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new LeafletJacksonModule());
+        final ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new GuavaModule());
 
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         mapper.disable(SerializationFeature.WRITE_NULL_MAP_VALUES);
