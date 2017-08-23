@@ -16,23 +16,27 @@
 
 package sk.drunkenpanda.leaflet.behaviors;
 
+import java.awt.*;
 import java.util.Set;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Sets;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
 import org.apache.wicket.util.tester.WicketTester;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Sets;
+
 import sk.drunkenpanda.leaflet.AbstractLeafletTest;
 import sk.drunkenpanda.leaflet.components.map.Map;
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.MouseEvent;
-import sk.drunkenpanda.leaflet.json.model.JsonLatLng;
-import sk.drunkenpanda.leaflet.json.model.JsonMouseEvent;
-import sk.drunkenpanda.leaflet.json.model.JsonPoint;
+import sk.drunkenpanda.leaflet.models.LatLng;
+import sk.drunkenpanda.leaflet.models.Point;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  *
@@ -40,33 +44,20 @@ import sk.drunkenpanda.leaflet.json.model.JsonPoint;
  */
 public final class MouseEventBehaviorTest extends AbstractLeafletTest {
 
-    private JsonMouseEvent jsonMouseEvent;
+    private MouseEvent mouseEvent;
 
     @Before
     public void setUp() {
-        this.jsonMouseEvent = new JsonMouseEvent();
-        final JsonPoint point = new JsonPoint();
-        point.setX(10.0);
-        point.setY(20.0);
-
-        final JsonLatLng latLng = new JsonLatLng();
-        latLng.setLatitude(35.34);
-        latLng.setLongitude(135.34);
-
-        jsonMouseEvent.setLatLng(latLng);
-        jsonMouseEvent.setContainerPoint(point);
-        jsonMouseEvent.setLayerPoint(point);
-        jsonMouseEvent.setType("click");
+        this.mouseEvent = MouseEvent.builder()
+            .layerPoint(Point.of(10.0, 20.0))
+            .latLng(LatLng.of(35.34, 135.34))
+            .containerPoint(Point.of(12.0, 22.0))
+            .type(MapEventType.CLICK)
+            .build();
     }
 
-    private JsonMouseEvent prepareMouseEvent(String type) {
-        JsonMouseEvent newMouseEvent = new JsonMouseEvent();
-        newMouseEvent.setContainerPoint(jsonMouseEvent.getContainerPoint());
-        newMouseEvent.setLatLng(jsonMouseEvent.getLatLng());
-        newMouseEvent.setLayerPoint(jsonMouseEvent.getLayerPoint());
-        newMouseEvent.setType(type);
-
-        return newMouseEvent;
+    private MouseEvent prepareMouseEvent(MapEventType type) {
+        return this.mouseEvent.withType(type);
     }
 
     @Test
@@ -96,8 +87,8 @@ public final class MouseEventBehaviorTest extends AbstractLeafletTest {
 
         ImmutableMap.Builder<MapEventType, TestMouseEventBehavior> behaviors = ImmutableMap.builder();
         for (MapEventType eventType : MouseEventBehavior.SUPPORTED_EVENTS) {
-            final JsonMouseEvent expectedEvent = this.prepareMouseEvent(eventType.getJavascriptName());
-            final TestMouseEventBehavior behavior = new TestMouseEventBehavior(eventType, expectedEvent.toModel());
+            final MouseEvent expectedEvent = this.prepareMouseEvent(eventType);
+            final TestMouseEventBehavior behavior = new TestMouseEventBehavior(eventType, expectedEvent);
             map.add(behavior);
 
             behaviors.put(eventType, behavior);
@@ -106,14 +97,14 @@ public final class MouseEventBehaviorTest extends AbstractLeafletTest {
         tester.startComponentInPage(map);
 
         for (java.util.Map.Entry<MapEventType, TestMouseEventBehavior> entry : behaviors.build().entrySet()) {
-            JsonMouseEvent expected = this.prepareMouseEvent(entry.getKey().getJavascriptName());
+            MouseEvent expected = this.prepareMouseEvent(entry.getKey());
 
             MockHttpServletRequest request = this.prepareRequest(tester, entry.getValue(), entry.getKey(), expected);
             tester.processRequest(request);
 
             assertThat(entry.getValue().actualEvent)
                     .as("Event [%s] was not triggered.", entry.getKey())
-                    .isEqualToComparingFieldByField(expected.toModel());
+                    .isEqualToComparingFieldByField(expected);
         }
     }
 

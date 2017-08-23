@@ -31,7 +31,6 @@ import sk.drunkenpanda.leaflet.components.map.Map;
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.Event;
 import sk.drunkenpanda.leaflet.events.PlainEvent;
-import sk.drunkenpanda.leaflet.json.model.JsonPlainEvent;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -45,7 +44,7 @@ public final class LeafletAjaxEventBehaviorTest extends AbstractLeafletTest {
 
     @Test
     public void testRenderEventScript() {
-        IHeaderResponse headerResponse = mock(IHeaderResponse.class);
+        final IHeaderResponse headerResponse = mock(IHeaderResponse.class);
 
         final TestAjaxEventBehavior behavior = new TestAjaxEventBehavior(MapEventType.CLICK);
         final Map map = new Map("map");
@@ -82,7 +81,7 @@ public final class LeafletAjaxEventBehaviorTest extends AbstractLeafletTest {
 
         tester.startComponentInPage(map);
 
-        MockHttpServletRequest request = this.prepareRequest(tester, behavior,
+        final MockHttpServletRequest request = this.prepareRequest(tester, behavior,
                 MapEventType.CLICK.getJavascriptName(), "");
 
         tester.processRequest(request);
@@ -99,14 +98,13 @@ public final class LeafletAjaxEventBehaviorTest extends AbstractLeafletTest {
         map.add(behavior);
 
         tester.startComponentInPage(map);
-        JsonPlainEvent jsonEvent = new JsonPlainEvent();
-        jsonEvent.setType("click");
+        final PlainEvent jsonEvent = PlainEvent.of(MapEventType.CLICK);
 
-        MockHttpServletRequest request = this.prepareRequest(tester, behavior, MapEventType.CLICK, jsonEvent);
+        final MockHttpServletRequest request = this.prepareRequest(tester, behavior, MapEventType.CLICK, jsonEvent);
         tester.processRequest(request);
 
         assertThat(behavior.wasTriggered).isTrue();
-        assertThat(behavior.lastEvent).isEqualToComparingFieldByField(jsonEvent.toModel());
+        assertThat(behavior.lastEvent).isEqualToComparingFieldByField(jsonEvent);
     }
 
     private class TestAjaxEventBehavior extends LeafletAjaxEventBehavior<PlainEvent> {
