@@ -28,11 +28,11 @@ public class Map extends GenericPanel<LatLng> {
     private MapOptions options;
 
     public Map(String id) {
-        this(id, new Model<LatLng>(), new MapOptions());
+        this(id, new Model<LatLng>(), MapOptions.builder().build());
     }
 
     public Map(String id, IModel<LatLng> model) {
-        this(id, model, new MapOptions());
+        this(id, model, MapOptions.builder().build());
     }
 
     public Map(String id, MapOptions options) {
@@ -43,7 +43,7 @@ public class Map extends GenericPanel<LatLng> {
         super(id, model);
         Args.notNull(options, "options");
         this.options = options;
-        
+
         add(LeafletResourcesBehavior.instance());
         add(new MapBehavior(this));
     }
