@@ -14,6 +14,11 @@ import com.google.common.collect.Lists;
 
 import sk.drunkenpanda.leaflet.json.ProperJson;
 
+/**
+ * Customizable {@link TileLayer} options.
+ *
+ * @author Jan Ferko
+ */
 @ModelStyle
 @ProperJson
 @Value.Immutable
