@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 ferko.
+ * Copyright 2016 Jan Ferko.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,34 +14,21 @@
  * limitations under the License.
  */
 
-package sk.drunkenpanda.leaflet.json.model;
+package sk.drunkenpanda.leaflet.events;
 
-import sk.drunkenpanda.leaflet.models.Point;
+import org.immutables.value.Value;
 
-public final class JsonPoint implements JsonEntity<Point>{
+import sk.drunkenpanda.leaflet.components.map.MapEventType;
 
-    private double x;
-    private double y;
+/**
+ * The simplest kind of event. It does not provide any additional payload.
+ *
+ * @author Jan Ferko
+ */
+@EventStyle
+@Value.Immutable(builder = false)
+public abstract class AbstractPlainEvent implements Event {
 
-    public double getX() {
-        return this.x;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public double getY() {
-        return this.y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    @Override
-    public Point toModel() {
-        return new Point(x, y);
-    }
-
+    @Value.Parameter
+    public abstract MapEventType getType();
 }

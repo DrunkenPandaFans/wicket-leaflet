@@ -16,6 +16,9 @@
 
 package sk.drunkenpanda.leaflet.components.map;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum MapEventType {
 
     CLICK("click"),
@@ -92,10 +95,12 @@ public enum MapEventType {
         this.javascriptName = javascriptName;
     }
 
+    @JsonValue
     public String getJavascriptName() {
         return this.javascriptName;
     }
 
+    @JsonCreator
     public static MapEventType find(String javascriptName) {
         for (MapEventType eventType : values()) {
             if (eventType.getJavascriptName().equals(javascriptName)) {

@@ -16,6 +16,11 @@
 
 package sk.drunkenpanda.leaflet.events;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.immutables.value.Value;
+
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 
 /**
@@ -23,47 +28,34 @@ import sk.drunkenpanda.leaflet.components.map.MapEventType;
  *
  * @author Jan Ferko
  */
-public final class ErrorEvent extends Event {
+@EventStyle
+@Value.Immutable(builder = false)
+public abstract class AbstractErrorEvent implements Event {
 
     /**
-     * The error message.
+     * The event type.
      */
-    private final String message;
-
-    /**
-     * The error code (if applicable).
-     */
-    private final Integer code;
-
-    /**
-     * Constructs new error event with given parameters.
-     *
-     * @param type event type, that triggered error.
-     * @param message the error message
-     * @param code the error code
-     */
-    public ErrorEvent(MapEventType type, String message, Integer code) {
-        super(type);
-        this.message = message;
-        this.code = code;
-    }
+    @Nonnull
+    @Override
+    @Value.Parameter
+    public abstract MapEventType getType();
 
     /**
      * Returns the error message.
      *
      * @return the error message
      */
-    public String getMessage() {
-        return this.message;
-    }
+    @Nonnull
+    @Value.Parameter
+    public abstract String getMessage();
 
     /**
      * Returns the error code.
      *
      * @return the error code or {@code null} if error does not have error code.
      */
-    public Integer getCode() {
-        return this.code;
-    }
+    @Nullable
+    @Value.Parameter
+    public abstract Integer getCode();
 
 }

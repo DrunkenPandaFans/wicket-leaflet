@@ -16,39 +16,31 @@
 
 package sk.drunkenpanda.leaflet.events;
 
+import javax.annotation.Nonnull;
+
+import org.immutables.value.Value;
+
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
-import sk.drunkenpanda.leaflet.models.ILayer;
 
 /**
- * Event that triggers when layer is added or removed to/from map.
+ * Event that triggers when dragging map component ends.
  *
  * @author Jan Ferko
  */
-public final class LayerEvent extends Event {
+@EventStyle
+@Value.Immutable(builder = false)
+public abstract class AbstractDragEndEvent implements Event {
+
+    @Override
+    @Nonnull
+    @Value.Parameter
+    public abstract MapEventType getType();
 
     /**
-     * The layer that was added or removed.
-     */
-    private final ILayer layer;
-
-    /**
-     * Constructs new layer event for given parameters.
+     * Returns the distance in pixels the draggable element was moved.
      *
-     * @param type the event type
-     * @param layer layer that was added or removed
+     * @return the distance in pixels the draggable element was moved
      */
-    public LayerEvent(MapEventType type, ILayer layer) {
-        super(type);
-        this.layer = layer;
-    }
-
-    /**
-     * Returns layer that was added or removed.
-     *
-     * @return layer that was added or removed
-     */
-    public ILayer getLayer() {
-        return this.layer;
-    }
-
+    @Value.Parameter
+    public abstract Number getDistance();
 }

@@ -18,14 +18,14 @@ package sk.drunkenpanda.leaflet.behaviors;
 
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
+
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.DragEndEvent;
-import sk.drunkenpanda.leaflet.json.model.JsonDragEndEvent;
 
-public abstract class DragEndEventBehavior extends LeafletAjaxEventBehavior<DragEndEvent, JsonDragEndEvent> {
+public abstract class DragEndEventBehavior extends LeafletAjaxEventBehavior<DragEndEvent> {
 
     public DragEndEventBehavior() {
-        super(MapEventType.DRAG_END, JsonDragEndEvent.class, "WicketLeaflet.DragEndEvent.getDragEndEvent(event)");
+        super(MapEventType.DRAG_END, DragEndEvent.class, "WicketLeaflet.DragEndEvent.getDragEndEvent(event)");
     }
 
     @Override

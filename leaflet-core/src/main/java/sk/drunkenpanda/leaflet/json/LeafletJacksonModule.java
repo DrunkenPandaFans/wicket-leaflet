@@ -1,12 +1,14 @@
-package sk.drunkenpanda.leaflet.json.serializers;
+package sk.drunkenpanda.leaflet.json;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import sk.drunkenpanda.leaflet.models.LatLng;
-import sk.drunkenpanda.leaflet.models.LatLngBounds;
-import sk.drunkenpanda.leaflet.models.TileLayer;
-import sk.drunkenpanda.leaflet.models.TileLayerOptions;
 
+import sk.drunkenpanda.leaflet.json.serializers.TileLayerSerializer;
+import sk.drunkenpanda.leaflet.models.TileLayer;
+
+/**
+ * @author Jan Ferko
+ */
 public final class LeafletJacksonModule extends SimpleModule {
 
     public LeafletJacksonModule() {
@@ -15,9 +17,6 @@ public final class LeafletJacksonModule extends SimpleModule {
     }
 
     private void registerSerializers() {
-        addSerializer(LatLng.class, new LatLngSerializer());
-        addSerializer(LatLngBounds.class, new LatLngBoundsSerializer());
         addSerializer(TileLayer.class, new TileLayerSerializer());
-        addSerializer(TileLayerOptions.class, new TileLayOptionsSerializer());
     }
 }

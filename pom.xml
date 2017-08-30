@@ -48,13 +48,14 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <guava.version>23.0-android</guava.version>
+    <immutables.version>2.5.6</immutables.version>
     <wicket.version>7.8.0</wicket.version>
     <webjars.version>0.5.6</webjars.version>
     <leaflet.version>0.7.3</leaflet.version>
     <log4j.version>1.2.16</log4j.version>
     <slf4j.version>1.6.4</slf4j.version>
     <servlet.version>3.0.1</servlet.version>
-    <jackson.version>2.5.4</jackson.version>
+    <jackson.version>2.9.0</jackson.version>
     <junit.version>4.12</junit.version>
     <mockito.version>1.9.5</mockito.version>
     <assertj.version>1.7.1</assertj.version>
@@ -112,6 +113,12 @@
       </dependency>
 
       <dependency>
+        <groupId>org.immutables</groupId>
+        <artifactId>value</artifactId>
+        <version>${immutables.version}</version>
+      </dependency>
+
+      <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>javax.servlet-api</artifactId>
         <version>${servlet.version}</version>
@@ -131,6 +138,11 @@
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-core</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.datatype</groupId>
+        <artifactId>jackson-datatype-guava</artifactId>
         <version>${jackson.version}</version>
       </dependency>
       <dependency>

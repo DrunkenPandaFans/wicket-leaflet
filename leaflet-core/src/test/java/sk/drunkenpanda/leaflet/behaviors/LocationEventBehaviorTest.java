@@ -17,21 +17,22 @@
 package sk.drunkenpanda.leaflet.behaviors;
 
 import java.util.Date;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.protocol.http.mock.MockHttpServletRequest;
 import org.apache.wicket.util.tester.WicketTester;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Before;
 import org.junit.Test;
+
 import sk.drunkenpanda.leaflet.AbstractLeafletTest;
 import sk.drunkenpanda.leaflet.components.map.Map;
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.ErrorEvent;
 import sk.drunkenpanda.leaflet.events.LocationEvent;
-import sk.drunkenpanda.leaflet.json.model.JsonErrorEvent;
-import sk.drunkenpanda.leaflet.json.model.JsonLatLng;
-import sk.drunkenpanda.leaflet.json.model.JsonLatLngBounds;
-import sk.drunkenpanda.leaflet.json.model.JsonLocationEvent;
+import sk.drunkenpanda.leaflet.models.LatLng;
+import sk.drunkenpanda.leaflet.models.LatLngBounds;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -39,41 +40,33 @@ import sk.drunkenpanda.leaflet.json.model.JsonLocationEvent;
  */
 public final class LocationEventBehaviorTest extends AbstractLeafletTest {
 
-    private JsonLocationEvent locationEvent;
+    private LocationEvent locationEvent;
 
-    private JsonErrorEvent errorEvent;
+    private ErrorEvent errorEvent;
 
     @Before
     public void setUp() {
-        this.locationEvent = new JsonLocationEvent();
-        this.locationEvent.setAccuracy(98.0);
-        this.locationEvent.setAltitude(345.0);
-        this.locationEvent.setAltitudeAccuracy(76.0);
-        this.locationEvent.setHeading(15.0);
-        this.locationEvent.setSpeed(20.0);
-        this.locationEvent.setTimestamp(new Date().getTime());
-        this.locationEvent.setType("location");
+        this.locationEvent = LocationEvent.builder()
+                .accuracy(98.0)
+                .altitude(345.0)
+                .altitudeAccuracy(76.0)
+                .heading(15.0)
+                .speed(20.0)
+                .timestamp(new Date().getTime())
+                .type(MapEventType.LOCATION_FOUND)
+                .latLng(LatLng.of(35.67, -103.45))
+                .latLngBounds(
+                        LatLngBounds.of(
+                                LatLng.of(67.0, 78.9),
+                                LatLng.of(43.12, 23.43))
+                )
+                .build();
 
-        JsonLatLng latLng = new JsonLatLng();
-        latLng.setLatitude(35.67);
-        latLng.setLongitude(-103.45);
-        this.locationEvent.setLatLng(latLng);
-
-        JsonLatLngBounds latLngBounds = new JsonLatLngBounds();
-        JsonLatLng northEast = new JsonLatLng();
-        northEast.setLatitude(67.0);
-        northEast.setLongitude(78.9);
-
-        JsonLatLng southWest = new JsonLatLng();
-        southWest.setLatitude(43.12);
-        southWest.setLongitude(23.43);
-        latLngBounds.setNorthEast(northEast);
-        latLngBounds.setSouthWest(southWest);
-
-        this.errorEvent = new JsonErrorEvent();
-        this.errorEvent.setCode(42);
-        this.errorEvent.setType("error");
-        this.errorEvent.setMessage("The Answer to the Ultimate Question of Life, the Universe, and Everything is 42.");
+        this.errorEvent = ErrorEvent.of(
+                MapEventType.LOCATION_ERROR,
+                "The Answer to the Ultimate Question of Life, the Universe, and Everything is 42.",
+                42
+        );
     }
 
     @Test
@@ -107,7 +100,7 @@ public final class LocationEventBehaviorTest extends AbstractLeafletTest {
 
         assertThat(behavior.actualLocationEvent)
                 .isNotNull()
-                .isEqualToComparingFieldByField(this.locationEvent.toModel());
+                .isEqualToComparingFieldByField(this.locationEvent);
         assertThat(behavior.actualError).isNull();
     }
 
@@ -126,7 +119,7 @@ public final class LocationEventBehaviorTest extends AbstractLeafletTest {
 
         assertThat(behavior.actualError)
                 .isNotNull()
-                .isEqualToComparingFieldByField(this.errorEvent.toModel());
+                .isEqualToComparingFieldByField(this.errorEvent);
         assertThat(behavior.actualLocationEvent).isNull();
     }
 

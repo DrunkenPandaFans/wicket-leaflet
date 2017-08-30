@@ -18,11 +18,11 @@ package sk.drunkenpanda.leaflet.behaviors;
 
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
-import sk.drunkenpanda.leaflet.components.map.MapEventType;
-import sk.drunkenpanda.leaflet.events.Event;
-import sk.drunkenpanda.leaflet.json.model.JsonEvent;
 
-public abstract class PlainEventBehavior extends LeafletAjaxEventBehavior<Event, JsonEvent> {
+import sk.drunkenpanda.leaflet.components.map.MapEventType;
+import sk.drunkenpanda.leaflet.events.PlainEvent;
+
+public abstract class PlainEventBehavior extends LeafletAjaxEventBehavior<PlainEvent> {
 
     private static final MapEventType[] SUPPORTED_TYPES = new MapEventType[] {
         MapEventType.FOCUS, MapEventType.BLUR, MapEventType.LOAD, MapEventType.UNLOAD,
@@ -32,7 +32,7 @@ public abstract class PlainEventBehavior extends LeafletAjaxEventBehavior<Event,
     };
 
     public PlainEventBehavior(MapEventType eventType) {
-        super(isSupported(eventType), JsonEvent.class, "WicketLeaflet.Event.getEvent(event)");
+        super(isSupported(eventType), PlainEvent.class, "WicketLeaflet.Event.getEvent(event)");
     }
 
     @Override

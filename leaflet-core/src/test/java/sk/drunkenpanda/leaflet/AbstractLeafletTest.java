@@ -18,6 +18,7 @@ package sk.drunkenpanda.leaflet;
 
 import java.nio.charset.Charset;
 import java.util.Iterator;
+
 import org.apache.wicket.Page;
 import org.apache.wicket.behavior.AbstractAjaxBehavior;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -26,12 +27,12 @@ import org.apache.wicket.request.Url;
 import org.apache.wicket.util.tester.DummyHomePage;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
+
 import sk.drunkenpanda.leaflet.behaviors.LeafletAjaxEventBehavior;
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.events.Event;
 import sk.drunkenpanda.leaflet.json.JsonRenderer;
 import sk.drunkenpanda.leaflet.json.JsonRendererFactory;
-import sk.drunkenpanda.leaflet.json.model.JsonEntity;
 
 /**
  * Base class for Wicket-Leaflet tests.
@@ -129,7 +130,6 @@ public abstract class AbstractLeafletTest {
      * JSON payload must be serializable with {@link JsonRenderer}.
      *
      * @param <E> event that is triggered by this request
-     * @param <J> type of expected JSON payload
      * @param <K> type of JSON payload to be sent in request body
      * @param tester the wicket tester which triggers behavior
      * @param behavior the behavior that should be triggered
@@ -137,10 +137,10 @@ public abstract class AbstractLeafletTest {
      * @param jsonPayload the JSON payload set as value for parameter with event type
      * @return mock HTTP request that triggers Leaflet event behavior
      */
-    protected <E extends Event, J extends JsonEntity<E>, K> MockHttpServletRequest prepareRequest(WicketTester tester,
-            LeafletAjaxEventBehavior<E, J> behavior, MapEventType eventType, K jsonPayload) {
-        JsonRenderer jsonRenderer = JsonRendererFactory.getJsonRenderer();
-        String json = jsonRenderer.toJson(jsonPayload);
+    protected <E extends Event, K> MockHttpServletRequest prepareRequest(WicketTester tester,
+            LeafletAjaxEventBehavior<E> behavior, MapEventType eventType, K jsonPayload) {
+        final JsonRenderer jsonRenderer = JsonRendererFactory.getJsonRenderer();
+        final String json = jsonRenderer.toJson(jsonPayload);
 
         return this.prepareRequest(tester, behavior, eventType.getJavascriptName(), json);
     }

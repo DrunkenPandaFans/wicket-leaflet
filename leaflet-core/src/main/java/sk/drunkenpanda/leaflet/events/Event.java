@@ -23,29 +23,13 @@ import sk.drunkenpanda.leaflet.components.map.MapEventType;
  *
  * @author Jan Ferko
  */
-public class Event {
-
-    /**
-     * The event type.
-     */
-    private final MapEventType type;
-
-    /**
-     * Constructs new event for given event type.
-     *
-     * @param type the event type
-     */
-    public Event(MapEventType type) {
-        this.type = type;
-    }
+public interface Event {
 
     /**
      * Returns type of event.
      *
      * @return type of event
      */
-    public MapEventType getType() {
-        return type;
-    }
+    MapEventType getType();
 
 }

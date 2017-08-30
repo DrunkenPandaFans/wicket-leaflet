@@ -16,6 +16,11 @@
 
 package sk.drunkenpanda.leaflet.events;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.immutables.value.Value;
+
 import sk.drunkenpanda.leaflet.components.map.MapEventType;
 import sk.drunkenpanda.leaflet.models.Point;
 
@@ -24,47 +29,30 @@ import sk.drunkenpanda.leaflet.models.Point;
  *
  * @author Jan Ferko
  */
-public final class ResizeEvent extends Event {
+@EventStyle
+@Value.Immutable(builder = false)
+public abstract class AbstractResizeEvent implements Event {
 
-    /**
-     * The old size before resize event.
-     */
-    private final Point oldSize;
-
-    /**
-     * The new size after resize event.
-     */
-    private final Point newSize;
-
-    /**
-     * Constructs new resize events with given parameters.
-     *
-     * @param type the event type that triggered event
-     * @param oldSize the old size before resize event
-     * @param newSize the new size after resize event
-     */
-    public ResizeEvent(MapEventType type, Point oldSize, Point newSize) {
-        super(type);
-        this.oldSize = oldSize;
-        this.newSize = newSize;
-    }
+    @Override
+    @Nonnull
+    @Value.Parameter
+    public abstract MapEventType getType();
 
     /**
      * Returns the old size before resize event.
      *
      * @return the old size before resize event
      */
-    public Point getOldSize() {
-        return this.oldSize;
-    }
+    @Nullable
+    @Value.Parameter
+    public abstract Point getOldSize();
 
     /**
      * Returns the new size after resize event.
      *
      * @return the new size after resize event
      */
-    public Point getNewSize() {
-        return this.newSize;
-    }
-
+    @Nullable
+    @Value.Parameter
+    public abstract Point getNewSize();
 }
